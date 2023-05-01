@@ -1,0 +1,12 @@
+
+#footer {
+    padding: 1rem;
+    line-height: .5rem;
+   
+    background-color: ghostwhite;
+    color: black;
+}
+
+#copyright {
+    text-align: center;
+}

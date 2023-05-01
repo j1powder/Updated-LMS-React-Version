@@ -1,0 +1,30 @@
+.courses {
+    margin: 1rem 0rem;
+    background-color: white ;
+}
+
+#videos {
+    display: block;
+    margin: 0rem auto;
+    width: 80%;
+    height: auto;
+}
+
+.sectionTitle {
+    border-radius: 5px;
+    padding: 1rem;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: Arial;
+    cursor: pointer;
+}
+
+.sectionTitle:hover {
+    border-radius: 5px;
+    background-color: ghostwhite;
+    padding: 1rem;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: Arial;
+    cursor: pointer;
+}

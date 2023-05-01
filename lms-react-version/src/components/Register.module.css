@@ -1,0 +1,41 @@
+#regpage {
+    min-height: 450px;
+}
+
+.logincard {
+    margin: 5rem auto;
+    display: block;
+    width: 60%;
+    background-color: #42B1FF;
+    color: black;
+    box-shadow: 1px 1px 5px 2px black;
+}
+
+#registerpage {
+    margin: 3rem auto;
+    display: block;
+    background-color: ghostwhite;
+    width: 60%;
+    padding: 2rem;
+    border-radius: 5px;
+    box-shadow: 2px 2px 8px 4px black;
+    
+    
+}
+
+.logincard label {
+    display: block;
+}
+
+.logincard input {
+    border-radius: 5px;
+    line-height: 28px;
+    margin-bottom: 1rem;
+    width: 85%;
+    display: block;
+}
+
+.loginbtn {
+    padding: .5rem;
+    border-radius: 5px;
+}
