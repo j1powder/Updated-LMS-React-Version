@@ -9,15 +9,32 @@ import './AerialLifts.css';
 const ArcFlash = (props) => {
 
     const [openItem, setOpenItem] = useState(null);
-    const [finalExamOpen, setFinalExamOpen] = useState(false)
+    const [finalExamOpen, setFinalExamOpen] = useState(false);
+    const [finalScore, setFinalScore] = useState();
+    const [scorer, setScorer] = useState(0);
     const { documents, error } = useCollection('newcourses/Arc Flash Safety/Sections')
 
-if(documents){
-    console.log(openItem)
-}
-    
+     
+ const getFinalScore = () => {
+ setFinalScore(Math.round(scorer / 12 * 100))
+ console.log(finalScore)
+ }
+ console.log(finalScore)
+
+ if(documents){
+    console.log(documents.map((course)=>{
+        if(course.question1.isCorrect !== "I am ready to proceed"){
+        return course.question1.isCorrect
+    }
+    }))
+} 
+
+console.log("Hello there")
+
+console.log(scorer)
+
 return <Fragment>
-<p>Hello There</p>
+<p >Hello There</p>
 {documents && 
     <div>
 {documents.map((section)=>{
@@ -31,7 +48,7 @@ return <Fragment>
             <ReactPlayer className='video-one' url={section.video}  controls></ReactPlayer>
              <form>
               <p><b>{section.question1.questionText}</b></p>
-              {section.question1.answerOptions.map((item)=>(<label className='answers'><input className='answerinput' type='radio' name='selection1'/>{item}</label>))}
+              {section.question1.answerOptions.map((item)=>(<label className='answers'><input  className='answerinput' type='radio' name='selection1' />{item}</label>))}
               <br/>
               <p><b>{section.question2.questionText}</b></p>
               {section.question2.answerOptions.map((item)=>(<label className='answers'><input className='answerinput' type='radio' name='selection2'/>{item}</label>))}  
@@ -48,21 +65,35 @@ return <Fragment>
 })}
 <Card className='coursecard' >
 <div className='courseTitle' onClick={()=> setFinalExamOpen(true)}>Final Knowledge Check</div>
-{finalExamOpen && documents.map((section)=>{
+{finalExamOpen && <>
+{finalExamOpen ? documents.map((section)=>{
     return <>
             <form>
             {section.question1.isCorrect !== "I am ready to proceed" ? <>  
-            <p><b>{section.question1.questionText}</b></p>
-            {section.question1.answerOptions.map((item)=>(<label className='answers'><input className='answerinput' type='radio' name='selection3'/>{item}</label>))}
+            <p id={section.question1.isCorrect}><b key={section.question1.isCorrect}>{section.question1.questionText}</b></p>
+            {section.question1.answerOptions.map((item)=>(<label key={item} className='answers' htmlFor={item}><input onChange={(e)=>{if(e.target.id === section.question1.isCorrect){setScorer(score => score + 1)}}} key={item} id={item} className='answerinput' type='radio' name='selection3'/>{item}</label>))}
 </>: null}
-            <p><b>{section.question2.questionText}</b></p>
-            {section.question2.answerOptions.map((item)=>(<label className='answers'><input className='answerinput' type='radio' name='selection4' />{item}</label>))}
+            <p key={section.question2.isCorrect}><b key={section.question2.isCorrect}>{section.question2.questionText}</b></p>
+            {section.question2.answerOptions.map((item)=>(<label key={item} className='answers' htmlFor={item}><input onChange={(e)=>{if(e.target.id === section.question2.isCorrect){setScorer(score => score + 1)}}}key={item} id={item} className='answerinput' type='radio' name='selection4' />{item}</label>))}
 
             </form>
             </>
-})}
+            
+})
+
+
+: null}
+<br/>
+<Button onClick={getFinalScore}>Submit</Button> 
+
+<h2>Your Final Score is: {finalScore}%</h2>
+
+</>
+}
 </Card>
 </div>
+
+
 }
 
 </Fragment>

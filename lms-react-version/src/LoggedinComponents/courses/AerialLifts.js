@@ -13,7 +13,7 @@ const AerialLifts = (props) => {
 if(documents){
     console.log(openItem)
 }
- 
+
 return <Fragment>
 <p>Hello There</p>
 {documents && 
