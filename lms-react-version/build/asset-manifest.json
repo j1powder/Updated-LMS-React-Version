@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.a4dd8854.css",
-    "main.js": "/static/js/main.ea1a373c.js",
-    "static/js/512.d0f3b659.chunk.js": "/static/js/512.d0f3b659.chunk.js",
+    "main.css": "/static/css/main.2f1ab78b.css",
+    "main.js": "/static/js/main.ebd4d44a.js",
+    "static/js/787.4d881e16.chunk.js": "/static/js/787.4d881e16.chunk.js",
     "static/media/AdobeStock_391430854.jpeg": "/static/media/AdobeStock_391430854.c183ff428fad7d17cf11.jpeg",
     "static/media/primeicons.svg": "/static/media/primeicons.e1441b135b3ca9ad643c.svg",
     "static/media/primeicons.eot": "/static/media/primeicons.d44157bdfa026dc877af.eot",
@@ -16,12 +16,12 @@
     "static/media/lato-v17-latin-ext_latin-300.woff2": "/static/media/lato-v17-latin-ext_latin-300.df0b586402822891d90b.woff2",
     "static/media/lato-v17-latin-ext_latin-700.woff2": "/static/media/lato-v17-latin-ext_latin-700.506aaf7f49928f0a3798.woff2",
     "index.html": "/index.html",
-    "main.a4dd8854.css.map": "/static/css/main.a4dd8854.css.map",
-    "main.ea1a373c.js.map": "/static/js/main.ea1a373c.js.map",
-    "512.d0f3b659.chunk.js.map": "/static/js/512.d0f3b659.chunk.js.map"
+    "main.2f1ab78b.css.map": "/static/css/main.2f1ab78b.css.map",
+    "main.ebd4d44a.js.map": "/static/js/main.ebd4d44a.js.map",
+    "787.4d881e16.chunk.js.map": "/static/js/787.4d881e16.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a4dd8854.css",
-    "static/js/main.ea1a373c.js"
+    "static/css/main.2f1ab78b.css",
+    "static/js/main.ebd4d44a.js"
   ]
 }
