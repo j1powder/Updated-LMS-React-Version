@@ -18,10 +18,16 @@ const Header = () => {
     if(user){
         items = [
  
-            { label: 'Dashboard', command: () => {
+            {label: 'Dashboard', command: () => {
                 window.location.href='/Dashboard'
             }},
-            { label: 'Logout', command: logout
+            {label: 'Course Assign', command: ()=>[
+                window.location.href='/Courselist'
+            ]},
+            {label: 'My Courses', command: () => {
+                window.location.href='/MyCourses'
+            }},
+            {label: 'Logout', command: logout
             }
         ]  
     } else {
@@ -39,7 +45,7 @@ const Header = () => {
    }
 //const start = <img src={logo} alt="logo"/>
     return  <div className="card">
-    <Menubar model={items}  />
+    <Menubar model={items} />
            </div>
 }
 

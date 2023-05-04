@@ -5,6 +5,8 @@ import Footer from './Layout/Footer';
 import HomePage from './components/Homepage';
 import LoginPage from './components/Loginpage';
 import Register from './components/Register';
+import MyCourses from './LoggedinComponents/MyCourses';
+import CourseList from './LoggedinComponents/CourseList';
 import { createBrowserRouter, RouterProvider, redirect } from 'react-router-dom';
 import Dashboard from './LoggedinComponents/Dashboard';
 import useAuthContext from './hooks/useAuthContext';
@@ -29,6 +31,7 @@ const checkAuthIn = () => {
   }
   return null
 }
+
 const checkAuthOut = () => {
   if(!user){
     return redirect('/')
@@ -40,7 +43,9 @@ const checkAuthOut = () => {
     {path: '/', element: <HomePage/>, loader:checkAuthIn},
     {path:'/Login', element: <LoginPage/>, loader: checkAuthIn},
     {path: '/Dashboard', element: <Dashboard/>, loader: checkAuthOut },
-    {path: '/Register', element: <Register/>}
+    {path: '/Register', element: <Register/>, loader: checkAuthIn},
+    {path: '/MyCourses', element: <MyCourses />, },
+    {path: '/Courselist', element: <CourseList/>}
   ])
 
 

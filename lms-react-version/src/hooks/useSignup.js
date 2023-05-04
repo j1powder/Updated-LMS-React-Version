@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import useAuthContext from './useAuthContext';
-import { projectAuth } from '../config';
+import { projectAuth, projectFirestore } from '../config';
 
 
 
@@ -25,6 +25,18 @@ const signup = async (displayName, email, password) => {
     
     // add display name to user
     await res.user.updateProfile({ displayName: displayName })
+   
+
+    //create user document
+
+    await projectFirestore.collection('users').doc(res.user.uid).set({
+        online: true,
+        displayName,
+        courses:{},
+        company:"",
+        userPermissionLevel: null
+
+    })
 
     //dispatch login action
     dispatch({ type: 'LOGIN', payload: res.user })
@@ -33,7 +45,7 @@ const signup = async (displayName, email, password) => {
         setIsPending(false)
         setError(null)
     }
-
+       
     }
     catch(err) {
         if(!isCancelled){

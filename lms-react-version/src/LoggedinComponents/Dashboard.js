@@ -1,5 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
-//import { projectFirestore } from '../config';
+import { Fragment, useState } from 'react';
 import useCollection from '../hooks/useCollection';
 import useAuthContext from '../hooks/useAuthContext';
 import './Dashboard.css';
@@ -23,7 +22,8 @@ import "primeicons/primeicons.css";
 const Dashboard = (props) => {
 const [courseOpen, setCourseOpen] = useState(null);
 const { user } = useAuthContext();
-const { documents, error } = useCollection('newcourses')
+const { documents, error } = useCollection('newcourses');
+
 
 
 
