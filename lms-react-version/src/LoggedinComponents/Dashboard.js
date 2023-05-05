@@ -31,6 +31,7 @@ console.log(courseOpen)
 
 
     return <Fragment>
+   {user && <>
    <Panel header="My Company Name" >
     <h1>Welcome {user.displayName}</h1>
     </Panel>
@@ -51,7 +52,7 @@ console.log(courseOpen)
     })}
 
 
-    </Panel>     
+    </Panel>   </>}  
 </Fragment>
 }
 

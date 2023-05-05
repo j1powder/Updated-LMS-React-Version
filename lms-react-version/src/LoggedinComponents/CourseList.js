@@ -3,7 +3,6 @@ import useCollection from "../hooks/useCollection";
 import useFirestore from "../hooks/useFirestore";
 import useAuthContext from "../hooks/useAuthContext";
 import { Card } from 'primereact/card';
-import firebase from 'firebase/compat/app'
 import {arrayUnion} from 'firebase/firestore'
 import 'firebase/compat/firestore'
 
@@ -14,13 +13,14 @@ const CourseList = () => {
  const { user } = useAuthContext();
 
  const updateCourseHandler = async (e) => {
-    await updateDocument(user.uid, {courses: arrayUnion({title:e.target.textContent, score:"", passed:""})})
+    await updateDocument(user.uid, {courses:e.target.textContent = {title:"", score:"", passed:""}})
     console.log(e.target.textContent)
  }
 
  
       
 return <Fragment>
+{user && <>
 {documents && documents.map((courses)=>{
     return <>
         <Card title={courses.id} onClick={updateCourseHandler}></Card>
@@ -28,6 +28,7 @@ return <Fragment>
 })
 
 }
+</>}
 </Fragment>
 }
 

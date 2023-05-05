@@ -1,9 +1,9 @@
 import classes from './Register.module.css';
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { Card } from 'primereact/card';
 import useSignup from '../hooks/useSignup';
 
-const Register = () => {
+const Register = (props) => {
 const [displayName, setDisplayName] = useState();
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
@@ -19,7 +19,9 @@ const registerHandler = (e) => {
     
 }
 
-    return <Card className={classes.logincard} title="Register to gain access">
+    return <Fragment>
+        {!props.currUser ? 
+        <Card className={classes.logincard} title="Register to gain access">
     <form onSubmit={registerHandler}>
     
     <label>Pick Display Name(Choose Wisely): <input type='text' onChange={(e)=> setDisplayName(e.target.value)} /></label>
@@ -34,6 +36,8 @@ const registerHandler = (e) => {
 
 
 </Card>
+:<div><h3>Whoops, You'll need to log out to view this page</h3></div>}
+</Fragment>
 }
 
 export default Register;

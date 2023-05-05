@@ -13,36 +13,22 @@ import Ammonia from './courses/AnhydrousAmmonia';
 
 
 
-const MyCourses = () => {
+const MyCourses = (props) => {
 const [courseOpen, setCourseOpen] = useState(null);
 const {documents, error} = useCollection('users');
 const { user } = useAuthContext();
 
-if(documents){
-    documents.map((currentuser)=>{
-        if(currentuser.id === user.uid){
-                console.log(currentuser.courses)
-                currentuser.courses.map((course)=>{
-                    console.log(course.title)
-                })
-              
-        }
-        
-    })
 
-}
 
-/* if(user){
-    console.log(user.uid)
-} */
+
 
 
     return <Fragment>
         <Panel header="My Courses"></Panel>
-        {documents && documents.map((currentuser)=>{
+        {documents && user && documents.map((currentuser)=>{
         return <>
             {currentuser.id === user.uid ? <>
-            {currentuser.courses.map((course)=>{
+            {Object.values(currentuser.courses).map((course)=>{
                 return <>
                 <Card className={classes.cardcomp} title={course.title} onClick={()=> setCourseOpen(course.title)} >
                     
@@ -63,13 +49,13 @@ if(documents){
                 </>
             })}
             
-             </>:null}
+             </>: null}
          </>
         })
        
        
         }
-
+    
     </Fragment>
 
 }

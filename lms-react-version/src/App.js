@@ -7,7 +7,7 @@ import LoginPage from './components/Loginpage';
 import Register from './components/Register';
 import MyCourses from './LoggedinComponents/MyCourses';
 import CourseList from './LoggedinComponents/CourseList';
-import { createBrowserRouter, RouterProvider, redirect } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Dashboard from './LoggedinComponents/Dashboard';
 import useAuthContext from './hooks/useAuthContext';
 
@@ -25,28 +25,23 @@ import useAuthContext from './hooks/useAuthContext';
 function App() {
   const { user } = useAuthContext();
 
-const checkAuthIn = () => {
-  if(user) {
-    return redirect('/Dashboard')
-  }
-  return null
-}
 
-const checkAuthOut = () => {
-  if(!user){
-    return redirect('/')
-  }
-  return null
-}
+ 
+ console.log(user)
 
-  const router = createBrowserRouter([
-    {path: '/', element: <HomePage/>, loader:checkAuthIn},
-    {path:'/Login', element: <LoginPage/>, loader: checkAuthIn},
-    {path: '/Dashboard', element: <Dashboard/>, loader: checkAuthOut },
-    {path: '/Register', element: <Register/>, loader: checkAuthIn},
-    {path: '/MyCourses', element: <MyCourses />, },
-    {path: '/Courselist', element: <CourseList/>}
+let router = null;
+
+
+  router = createBrowserRouter([
+    {path: '/', element: <HomePage currUser={user}/> },
+    {path:'/Login', element: <LoginPage currUser={user}/> },
+    {path: '/Register', element: <Register currUser={user}/>  },
+    {path: '/Dashboard', element: <Dashboard currUser={user}/> },
+    {path: '/MyCourses', element: <MyCourses currUser={user} /> },
+    {path: '/Courselist', element: <CourseList currUser={user}/>,}
   ])
+
+ 
 
 
   return <Fragment>

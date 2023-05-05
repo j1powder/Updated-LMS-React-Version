@@ -3,6 +3,9 @@ import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import ReactPlayer from 'react-player';
 import useCollection from '../../hooks/useCollection';
+import useFirestore from '../../hooks/useFirestore';
+import useAuthContext from '../../hooks/useAuthContext';
+import { arrayUnion } from 'firebase/firestore';
 import './AerialLifts.css';
        
 const ArcFlash = (props) => {
@@ -11,6 +14,8 @@ const ArcFlash = (props) => {
     const [finalExamOpen, setFinalExamOpen] = useState(false);
     const [totalCorrect, setTotalCorrect] = useState(0);
     const { documents, error } = useCollection('newcourses/Arc Flash Safety/Sections')
+    const { updateDocument } = useFirestore('users');
+    const { user } = useAuthContext();
      
 const getFinalScore = (e) => {
 e.preventDefault()
@@ -22,7 +27,14 @@ for(let x = 0; x < final.length; x++){
     }
 }
 }
- 
+
+const updateScoreHandler = async (e) => {
+    await updateDocument(user.uid, {courses: arrayUnion({title:"Arc Flash Safety", score: 87, passed:false})})
+    console.log(e.target.textContent)
+    e.target.disabled='true';
+ }
+
+ console.log(totalCorrect)
 
 
 return <Fragment>
@@ -73,7 +85,7 @@ return <Fragment>
                 id={item}  
                 className='answerinput' 
                 type='radio'
-                name={section.question1.isCorrect} 
+                name={section.question1.questionText} 
                 />
                 {item}
                 </label>))}
@@ -85,7 +97,7 @@ return <Fragment>
                 id={item} 
                 className='answerinput' 
                 type='radio'
-                name={section.question2.isCorrect}
+                name={section.question2.questionText}
                 />
                 {item}
                 </label>))}
@@ -98,7 +110,7 @@ return <Fragment>
 
 : null}
 <br/>
-<Button onClick={(e)=> {e.target.disabled='true'}}>Submit</Button> 
+<Button onClick={updateScoreHandler}>Submit</Button> 
 </form>
 <h2>Your Final Score is: {Math.round(totalCorrect/12 *100)}%</h2>
 

@@ -1,8 +1,9 @@
 import './Loginpage.css';
 import { Card } from 'primereact/card';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import useLogin from '../hooks/useLogin';
 import useAuthContext from '../hooks/useAuthContext';
+import { redirect } from 'react-router-dom';
 //import useLogout from '../hooks/useLogout';
 
 
@@ -19,8 +20,7 @@ const LoginPage = () => {
     const loginHandler = (e) => {
         e.preventDefault()
         login(email, password)
-        setEmail('')
-        setPassword('')
+        redirect('/Dashboard')
     }
 
  
@@ -28,7 +28,9 @@ const LoginPage = () => {
 
 
 
-    return <Card className='logincard' title="Login">
+    return<Fragment>
+    {!user ?
+     <Card className='logincard' title="Login">
         <form onSubmit={loginHandler}>
        
         <label>Username: </label><input type='email' onChange={(e)=> setEmail(e.target.value)} />
@@ -42,6 +44,8 @@ const LoginPage = () => {
 
     
     </Card>
+: <div><h3>Whoops!!, You'll need to log out to view this page</h3></div>}
+    </Fragment>
 }
 
 export default LoginPage;
