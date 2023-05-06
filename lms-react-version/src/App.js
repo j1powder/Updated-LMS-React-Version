@@ -3,12 +3,10 @@ import './App.css';
 import Header from './Layout/Header';
 import Footer from './Layout/Footer';
 import HomePage from './components/Homepage';
-import LoginPage from './components/Loginpage';
 import Register from './components/Register';
 import MyCourses from './LoggedinComponents/MyCourses';
 import CourseList from './LoggedinComponents/CourseList';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Dashboard from './LoggedinComponents/Dashboard';
 import useAuthContext from './hooks/useAuthContext';
 
 //theme
@@ -34,9 +32,7 @@ let router = null;
 
   router = createBrowserRouter([
     {path: '/', element: <HomePage currUser={user}/> },
-    {path:'/Login', element: <LoginPage currUser={user}/> },
     {path: '/Register', element: <Register currUser={user}/>  },
-    {path: '/Dashboard', element: <Dashboard currUser={user}/> },
     {path: '/MyCourses', element: <MyCourses currUser={user} /> },
     {path: '/Courselist', element: <CourseList currUser={user}/>,}
   ])

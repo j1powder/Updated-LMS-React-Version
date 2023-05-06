@@ -18,7 +18,6 @@ const final = document.getElementById('aerialLiftsFinal');
 for(let x = 0; x < final.length; x++){
     if(final[x].checked && final[x].isCorrect === 'true'){
        setTotalCorrect(score => score + 1);
-       e.target.disabled='true';
     }
 }
 }
@@ -98,7 +97,7 @@ return <Fragment>
 
 : null}
 <br/>
-<Button onClick={(e)=> {e.target.disabled='true'}}>Submit</Button> 
+<Button className='btn-final' onClick={(e)=> {e.target.disabled='true'}}>Submit</Button> 
 </form>
 <h2>Your Final Score is: {Math.round(totalCorrect/13 *100)}%</h2>
 

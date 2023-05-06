@@ -13,7 +13,7 @@ const CourseList = () => {
  const { user } = useAuthContext();
 
  const updateCourseHandler = async (e) => {
-    await updateDocument(user.uid, {courses:e.target.textContent = {title:"", score:"", passed:""}})
+    await updateDocument(user.uid, {courses:arrayUnion({title:e.target.textContent, score:"", passed:""})})
     console.log(e.target.textContent)
  }
 

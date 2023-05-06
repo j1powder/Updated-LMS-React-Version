@@ -1,3 +1,8 @@
+// Component is no longer in use. Has been combined with home page.
+
+
+
+
 import { Fragment, useState } from 'react';
 import useCollection from '../hooks/useCollection';
 import useAuthContext from '../hooks/useAuthContext';

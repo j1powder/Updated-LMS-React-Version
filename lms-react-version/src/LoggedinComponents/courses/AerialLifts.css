@@ -42,3 +42,14 @@ display: block;
     cursor: pointer;
 }
 
+.btn-final {
+    background-color: ghostwhite !important;
+    border: 2px solid black !important;
+    color: black !important;
+}
+
+.btn-final:hover {
+    background-color: lightgray !important;
+    border: 2px solid black !important;
+    color: black !important;
+}

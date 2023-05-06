@@ -1,11 +1,11 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useRef } from 'react';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import ReactPlayer from 'react-player';
 import useCollection from '../../hooks/useCollection';
 import useFirestore from '../../hooks/useFirestore';
 import useAuthContext from '../../hooks/useAuthContext';
-import { arrayUnion } from 'firebase/firestore';
+import { arrayUnion, arrayRemove } from 'firebase/firestore';
 import './AerialLifts.css';
        
 const ArcFlash = (props) => {
@@ -16,25 +16,32 @@ const ArcFlash = (props) => {
     const { documents, error } = useCollection('newcourses/Arc Flash Safety/Sections')
     const { updateDocument } = useFirestore('users');
     const { user } = useAuthContext();
-     
-const getFinalScore = (e) => {
+    const subBtnRef = useRef();
+
+    const arcFinalScore = Math.round(totalCorrect/12 * 100)
+
+const getFinalScore = async (e) => {
 e.preventDefault()
 const final = document.getElementById('arcflashfinal')
 for(let x = 0; x < final.length; x++){
     if(final[x].checked && final[x].isCorrect === 'true'){
        setTotalCorrect(score => score + 1);
-       e.target.disabled='true';
+       e.target.disabled=true;
+
     }
 }
+
 }
 
-const updateScoreHandler = async (e) => {
-    await updateDocument(user.uid, {courses: arrayUnion({title:"Arc Flash Safety", score: 87, passed:false})})
-    console.log(e.target.textContent)
-    e.target.disabled='true';
- }
 
- console.log(totalCorrect)
+const updateScoreHandler = async (e) => {
+    e.preventDefault();
+    await updateDocument(user.uid, {courses: arrayRemove({title:"Arc Flash Safety", score:"", passed:""})})
+    await updateDocument(user.uid, {courses: arrayUnion({title:"Arc Flash Safety", score:arcFinalScore, passed:""})})
+    console.log(arcFinalScore)
+    e.target.disabled='true';
+ } 
+
 
 
 return <Fragment>
@@ -72,7 +79,7 @@ return <Fragment>
 <Card className='coursecard' >
 <div className='courseTitle' onClick={()=> {if(openItem == null) {setFinalExamOpen(true)}}}>Final Knowledge Check</div>
 {finalExamOpen && openItem === null &&<>
-<form onSubmit={getFinalScore} id="arcflashfinal">
+<form onSubmit={updateScoreHandler} id="arcflashfinal">
 {finalExamOpen ? documents.map((section)=>{
     return <>
             
@@ -110,9 +117,11 @@ return <Fragment>
 
 : null}
 <br/>
-<Button onClick={updateScoreHandler}>Submit</Button> 
+
+<Button onClick={getFinalScore} className='btn-final' >Submit</Button>
+<Button className='btn-final' onClick={updateScoreHandler}>Save</Button> 
 </form>
-<h2>Your Final Score is: {Math.round(totalCorrect/12 *100)}%</h2>
+<h2>Your Final Score is: {arcFinalScore}%</h2>
 
 </>
 }

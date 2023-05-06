@@ -32,7 +32,7 @@ const signup = async (displayName, email, password) => {
     await projectFirestore.collection('users').doc(res.user.uid).set({
         online: true,
         displayName,
-        courses:{},
+        courses:[],
         company:"",
         userPermissionLevel: null
 

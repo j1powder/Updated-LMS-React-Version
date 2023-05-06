@@ -28,7 +28,7 @@ const { user } = useAuthContext();
         {documents && user && documents.map((currentuser)=>{
         return <>
             {currentuser.id === user.uid ? <>
-            {Object.values(currentuser.courses).map((course)=>{
+            {currentuser.courses.map((course)=>{
                 return <>
                 <Card className={classes.cardcomp} title={course.title} onClick={()=> setCourseOpen(course.title)} >
                     

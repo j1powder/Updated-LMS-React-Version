@@ -1,0 +1,21 @@
+.label, .input {
+    display: block;
+}
+
+.input {
+    margin-bottom: .7rem;
+    border-radius: 5px;
+    line-height: 25px;
+}
+
+.btn {
+    background-color: ghostwhite !important;
+    border: 2px solid black !important;
+    color: black !important;
+}
+
+.btn:hover {
+    background-color: lightgray !important;
+    border: 2px solid black !important;
+    color: black !important;
+}

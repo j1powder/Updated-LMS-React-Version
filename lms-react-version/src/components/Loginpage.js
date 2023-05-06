@@ -1,3 +1,5 @@
+// component no longer in use, currently using login modal. 
+
 import './Loginpage.css';
 import { Card } from 'primereact/card';
 import { Fragment, useState } from 'react';
