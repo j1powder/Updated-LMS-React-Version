@@ -34,6 +34,9 @@ const signup = async (displayName, email, password) => {
         displayName,
         courses:[],
         company:"",
+        firstName:"",
+        lastName:"",
+        address:"",
         userPermissionLevel: null
 
     })

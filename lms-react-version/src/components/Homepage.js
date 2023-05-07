@@ -7,16 +7,17 @@ import '../LoggedinComponents/Dashboard.css';
 import { Panel } from 'primereact/panel';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
-import AerialLifts from '../LoggedinComponents/courses/AerialLifts';
-import ArcFlash from '../LoggedinComponents/courses/ArcFlash';
-import AbrasiveBlasting from '../LoggedinComponents/courses/AbrasiveBlasting';
-import Ammonia from '../LoggedinComponents/courses/AnhydrousAmmonia';
+import useFirestore from '../hooks/useFirestore';
+
 
 const HomePage = (props) => {
 console.log(props.currUser)
 const [courseOpen, setCourseOpen] = useState(null);
 const { user } = useAuthContext();
-const { documents, error } = useCollection('newcourses');
+const { documents, error } = useCollection('users');
+const { updateDocument, response } = useFirestore('users');
+
+
 
 
     return <Fragment>
@@ -29,26 +30,38 @@ const { documents, error } = useCollection('newcourses');
 : <>
 
 <Panel header="My Company Name" >
+
+
+
 <h1>Welcome {user.displayName}</h1>
 </Panel>
-<Panel header="courses">
-
-
-{documents && documents.map((course)=> {
-    return <Card key={course.id} className="courses">
-        <div className='sectionTitle' onClick={()=>setCourseOpen(course.courseTitle)} >{course.courseTitle}</div>
-        {courseOpen === course.courseTitle ? <div>{course.courseTitle === "Aerial Lifts" ? <AerialLifts />: null}
-                                                  {course.courseTitle === "Abrasive Blasting Safety" ? <AbrasiveBlasting/>: null}
-                                                  {course.courseTitle === "Arc Flash Safety" ? <ArcFlash/> : null}
-                                                  {course.courseTitle === "Anhydrous Ammonia" ? <Ammonia /> : null}
-                                            <Button style={{backgroundColor:'gray', border: 'black'}} onClick={()=> setCourseOpen(null)}>Back to Courses</Button></div> :null}
-       
-
-    </Card>
+<Panel header="my profile">
+<Card>
+{documents && user && documents.map((currUser)=>{
+  return <>  {currUser.id === user.uid ? <>
+    <h4>Display Name: {currUser.displayName}</h4>
+    <h4>Company: {currUser.company}</h4>
+    
+    </>:null} </>
 })}
 
+</Card>
 
-</Panel> </>}  
+
+<Card title="Update Profile">
+ <div>
+<form id='profileform'>
+<label>First Name: <input type='text' /> </label>
+<label>Last Name: <input type='text' /> </label>
+<label>Address: <input type='text' /> </label>
+<label>Company: <input type='text' /> </label>
+<Button className='profile-btn'>Update</Button>
+</form>
+</div>
+</Card>
+</Panel> 
+
+</>}  
         </Fragment>
 }
 

@@ -24,26 +24,46 @@ const { user } = useAuthContext();
 
 
     return <Fragment>
-        <Panel header="My Courses"></Panel>
+        <Panel header='My Scores'>
+        {documents && user && documents.map((currentuser)=>{
+            return <> 
+            {currentuser.id === user.uid ? <>
+                <table className={classes.table}>
+                <thead><tr><th>Course</th><th>Score %</th></tr></thead>    
+                </table>
+            {currentuser.courses.map((course)=>{
+                return <>
+                <table className={classes.table}>
+                <tbody><tr><td>{course.title}</td><td>{course.score}</td></tr></tbody>    
+                </table>
+                 </>
+            })}
+             </>: null}
+            </>
+        })}
+          
+
+        </Panel>
+        <Panel header="My Courses">
         {documents && user && documents.map((currentuser)=>{
         return <>
             {currentuser.id === user.uid ? <>
             {currentuser.courses.map((course)=>{
                 return <>
-                <Card className={classes.cardcomp} title={course.title} onClick={()=> setCourseOpen(course.title)} >
-                    
+                <Card className={classes.cardcomp}>
+                <div className='sectionTitle' onClick={()=>setCourseOpen(course.title)} >{course.title}</div>
                         
                 {courseOpen === course.title && <>
                  {course.title === "Aerial Lifts" ? <AerialLifts />: null}   
                  {course.title === "Abrasive Blasting Safety" ? <AbrasiveBlasting/>: null}
                  {course.title === "Arc Flash Safety" ? <ArcFlash/> : null}
                  {course.title === "Anhydrous Ammonia" ? <Ammonia /> : null}
-            
+                 
             <Button style={{backgroundColor:'gray', border: 'black'}} onClick={()=> setCourseOpen(null)}>Back to Courses</Button>
                  
 
             </>}
-    
+             
                 </Card>
                 
                 </>
@@ -55,7 +75,7 @@ const { user } = useAuthContext();
        
        
         }
-    
+    </Panel>
     </Fragment>
 
 }

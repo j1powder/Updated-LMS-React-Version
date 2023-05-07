@@ -5,6 +5,7 @@ import useAuthContext from "../hooks/useAuthContext";
 import { Card } from 'primereact/card';
 import {arrayUnion} from 'firebase/firestore'
 import 'firebase/compat/firestore'
+import classes from './CourseList.module.css';
 
 
 const CourseList = () => {
@@ -23,7 +24,7 @@ return <Fragment>
 {user && <>
 {documents && documents.map((courses)=>{
     return <>
-        <Card title={courses.id} onClick={updateCourseHandler}></Card>
+        <Card className={classes.courseassign} title={courses.id} onClick={updateCourseHandler}></Card>
     </>
 })
 

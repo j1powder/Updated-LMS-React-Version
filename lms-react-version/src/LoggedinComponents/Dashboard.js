@@ -45,14 +45,14 @@ console.log(courseOpen)
 
     {documents && documents.map((course)=> {
         return <Card key={course.id} className="courses">
-            <div className='sectionTitle' onClick={()=>setCourseOpen(course.courseTitle)} >{course.courseTitle}</div>
+            <div className='sectionTitle' onClick={()=>setCourseOpen(course.courseTitle)} >{course.courseTitle}
             {courseOpen === course.courseTitle ? <div>{course.courseTitle === "Aerial Lifts" ? <AerialLifts />: null}
                                                       {course.courseTitle === "Abrasive Blasting Safety" ? <AbrasiveBlasting/>: null}
                                                       {course.courseTitle === "Arc Flash Safety" ? <ArcFlash/> : null}
                                                       {course.courseTitle === "Anhydrous Ammonia" ? <Ammonia /> : null}
                                                 <Button style={{backgroundColor:'gray', border: 'black'}} onClick={()=> setCourseOpen(null)}>Back to Courses</Button></div> :null}
            
-
+                                                </div>
         </Card>
     })}
 

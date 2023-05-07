@@ -12,13 +12,14 @@ const ArcFlash = (props) => {
 
     const [openItem, setOpenItem] = useState(null);
     const [finalExamOpen, setFinalExamOpen] = useState(false);
+    const [scoreCalculated, setScoreCalculated] = useState(false);
     const [totalCorrect, setTotalCorrect] = useState(0);
     const { documents, error } = useCollection('newcourses/Arc Flash Safety/Sections')
     const { updateDocument } = useFirestore('users');
     const { user } = useAuthContext();
     const subBtnRef = useRef();
 
-    const arcFinalScore = Math.round(totalCorrect/12 * 100)
+    const finalScore = Math.round(totalCorrect/12 * 100)
 
 const getFinalScore = async (e) => {
 e.preventDefault()
@@ -27,6 +28,7 @@ for(let x = 0; x < final.length; x++){
     if(final[x].checked && final[x].isCorrect === 'true'){
        setTotalCorrect(score => score + 1);
        e.target.disabled=true;
+       setScoreCalculated(true);
 
     }
 }
@@ -37,11 +39,10 @@ for(let x = 0; x < final.length; x++){
 const updateScoreHandler = async (e) => {
     e.preventDefault();
     await updateDocument(user.uid, {courses: arrayRemove({title:"Arc Flash Safety", score:"", passed:""})})
-    await updateDocument(user.uid, {courses: arrayUnion({title:"Arc Flash Safety", score:arcFinalScore, passed:""})})
-    console.log(arcFinalScore)
+    await updateDocument(user.uid, {courses: arrayUnion({title:"Arc Flash Safety", score:finalScore, passed:""})})
+    console.log(finalScore)
     e.target.disabled='true';
  } 
-
 
 
 return <Fragment>
@@ -118,10 +119,10 @@ return <Fragment>
 : null}
 <br/>
 
-<Button onClick={getFinalScore} className='btn-final' >Submit</Button>
-<Button className='btn-final' onClick={updateScoreHandler}>Save</Button> 
+{!scoreCalculated && <Button onClick={getFinalScore} className='btn-final' >Submit</Button>}
+{scoreCalculated && <Button className='btn-final' onClick={updateScoreHandler}>Save</Button>} 
 </form>
-<h2>Your Final Score is: {arcFinalScore}%</h2>
+<h2>Your Final Score is: {finalScore}%</h2>
 
 </>
 }

@@ -3,3 +3,22 @@
 .cardcomp {
     margin: 1rem;
 }
+
+.table{
+    border: 1px solid black;
+    width: 50%;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px grey;
+    margin: .3rem;
+}
+.table th {
+
+    font-size: 25px;
+    padding: 1rem;
+}
+.table td{
+    text-align: left;
+    padding: 1rem;
+    font-weight: bold;
+
+}

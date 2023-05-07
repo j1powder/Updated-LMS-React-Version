@@ -1,0 +1,17 @@
+
+
+.courseassign {
+    margin: .5rem;
+}
+.courseassign:hover {
+    margin: .5rem;
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+.courseassign:active {
+    margin: .5rem auto;
+    background-color: whitesmoke;
+    width: 95%;
+    display: block
+
+}

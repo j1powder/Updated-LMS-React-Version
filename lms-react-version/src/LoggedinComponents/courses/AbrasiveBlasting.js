@@ -1,28 +1,50 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useRef } from 'react';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import ReactPlayer from 'react-player';
 import useCollection from '../../hooks/useCollection';
+import useFirestore from '../../hooks/useFirestore';
+import useAuthContext from '../../hooks/useAuthContext';
+import { arrayUnion, arrayRemove } from 'firebase/firestore';
 import './AerialLifts.css';
        
 const AbrasiveBlasting = (props) => {
 
     const [openItem, setOpenItem] = useState(null);
     const [finalExamOpen, setFinalExamOpen] = useState(false);
+    const [scoreCalculated, setScoreCalculated] = useState(false);
     const [totalCorrect, setTotalCorrect] = useState(0);
     const { documents, error } = useCollection('newcourses/Abrasive Blasting Safety/Sections')
-     
-const getFinalScore = (e) => {
+    const { updateDocument } = useFirestore('users');
+    const { user } = useAuthContext();
+    const subBtnRef = useRef();
+
+    const finalScore = Math.round(totalCorrect/13 * 100)
+
+const getFinalScore = async (e) => {
 e.preventDefault()
-const final = document.getElementById('abrasiveblastingFinal');
+const final = document.getElementById('abrasiveBlastingfinal')
 for(let x = 0; x < final.length; x++){
     if(final[x].checked && final[x].isCorrect === 'true'){
        setTotalCorrect(score => score + 1);
-       
+       e.target.disabled=true;
+       setScoreCalculated(true);
+
     }
 }
+
 }
- 
+
+
+const updateScoreHandler = async (e) => {
+    e.preventDefault();
+    await updateDocument(user.uid, {courses: arrayRemove({title:"Abrasive Blasting Safety", score:"", passed:""})})
+    await updateDocument(user.uid, {courses: arrayUnion({title:"Abrasive Blasting Safety", score:finalScore, passed:""})})
+    console.log(finalScore)
+    e.target.disabled='true';
+ } 
+
+
 
 
 return <Fragment>
@@ -60,7 +82,7 @@ return <Fragment>
 <Card className='coursecard' >
 <div className='courseTitle' onClick={()=> {if(openItem == null) {setFinalExamOpen(true)}}}>Final Knowledge Check</div>
 {finalExamOpen && openItem === null &&<>
-<form onSubmit={getFinalScore} id="abrasiveblastingFinal">
+<form onSubmit={updateScoreHandler} id="abrasiveBlastingfinal">
 {finalExamOpen ? documents.map((section)=>{
     return <>
             
@@ -68,7 +90,7 @@ return <Fragment>
             <p id={section.question1.isCorrect} iscounted='true'><b key={section.question1.isCorrect}>{section.question1.questionText}</b></p>
             {section.question1.answerOptions.map((item)=>(<label key={item} className='answers' htmlFor={item}>
                 <input 
-                onChange={(e)=>{if(e.target.id === section.question1.isCorrect){e.target.isCorrect='true';e.target.disabled='true' } else{ e.target.isCorrect='false'; e.target.disabled='true'}}} 
+                onChange={(e)=>{if(e.target.id === section.question1.isCorrect){e.target.disabled="true"; e.target.isCorrect='true' } else{e.target.disabled='true'; e.target.isCorrect='false'}}} 
                 key={item} 
                 id={item}  
                 className='answerinput' 
@@ -80,12 +102,12 @@ return <Fragment>
 </>: null}
             <p key={section.question2.isCorrect} iscounted='true'><b key={section.question2.isCorrect}>{section.question2.questionText}</b></p>
             {section.question2.answerOptions.map((item)=>(<label key={item} className='answers' htmlFor={item}>
-                <input onChange={(e)=>{if(e.target.id === section.question2.isCorrect){ e.target.isCorrect='true'; e.target.disabled='true'} else{ e.target.isCorrect='false'; e.target.disabled='true'}}}
+                <input onChange={(e)=>{if(e.target.id === section.question2.isCorrect){e.target.disabled='true'; e.target.isCorrect='true'} else{e.target.disabled='true'; e.target.isCorrect='false'}}}
                 key={item} 
                 id={item} 
                 className='answerinput' 
                 type='radio'
-                name={section.question2.questionText} 
+                name={section.question2.questionText}
                 />
                 {item}
                 </label>))}
@@ -98,9 +120,11 @@ return <Fragment>
 
 : null}
 <br/>
-<Button className='btn-final' onClick={(e)=> {e.target.disabled='true'}}>Submit</Button> 
+
+{!scoreCalculated && <Button ref={subBtnRef} onClick={getFinalScore} className='btn-final' >Submit</Button>}
+{scoreCalculated && <Button className='btn-final' onClick={updateScoreHandler}>Save</Button>} 
 </form>
-<h2>Your Final Score is: {Math.round(totalCorrect/18 *100)}%</h2>
+<h2>Your Final Score is: {finalScore}%</h2>
 
 </>
 }

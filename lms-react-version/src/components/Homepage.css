@@ -21,3 +21,39 @@
     text-shadow:1px 1px 3px black;
 
 }
+
+#profileform {
+    padding: 1rem;
+}
+
+#profileform label, #profileform input {
+    display: block;
+    font-weight: bold;
+}
+
+#profileform input {
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    line-height: 30px;
+    width: 85%;
+}
+#profileform input:hover {
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    line-height: 30px;
+    width: 85%;
+    border: 1px solid #1189dd;
+    background-color: whitesmoke;
+}
+
+.profile-btn {
+    background-color: whitesmoke !important;
+    color: #0b0b45 !important;
+    border: black 1px solid !important;
+}
+
+.profile-btn:hover {
+    background-color: lightgray !important;
+    color: #0b0b45 !important;
+    border: black 1px solid !important;
+}
