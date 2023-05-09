@@ -21,6 +21,7 @@ const ArcFlash = (props) => {
 
     const finalScore = Math.round(totalCorrect/12 * 100)
 
+
 const getFinalScore = async (e) => {
 e.preventDefault()
 const final = document.getElementById('arcflashfinal')
@@ -38,8 +39,8 @@ for(let x = 0; x < final.length; x++){
 
 const updateScoreHandler = async (e) => {
     e.preventDefault();
-    await updateDocument(user.uid, {courses: arrayRemove({title:"Arc Flash Safety", score:"", passed:""})})
-    await updateDocument(user.uid, {courses: arrayUnion({title:"Arc Flash Safety", score:finalScore, passed:""})})
+    await updateDocument(user.uid, {courses: arrayRemove({title:"Arc Flash Safety", score:"", passed:"", isAssigned: true})})
+    await updateDocument(user.uid, {courses: arrayUnion({title:"Arc Flash Safety", score:finalScore, passed:"", isAssigned: true})})
     console.log(finalScore)
     e.target.disabled='true';
  } 

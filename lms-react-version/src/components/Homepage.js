@@ -36,7 +36,7 @@ const { updateDocument, response } = useFirestore('users');
 <h1>Welcome {user.displayName}</h1>
 </Panel>
 <Panel header="my profile">
-<Card>
+<Card className='profile-card'>
 {documents && user && documents.map((currUser)=>{
   return <>  {currUser.id === user.uid ? <>
     <h4>Display Name: {currUser.displayName}</h4>
@@ -48,7 +48,7 @@ const { updateDocument, response } = useFirestore('users');
 </Card>
 
 
-<Card title="Update Profile">
+<Card className='profile-card' title="Update Profile">
  <div>
 <form id='profileform'>
 <label>First Name: <input type='text' /> </label>

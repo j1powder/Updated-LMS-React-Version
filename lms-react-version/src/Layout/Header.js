@@ -6,6 +6,7 @@ import useAuthContext from '../hooks/useAuthContext';
 import useLogout from '../hooks/useLogout';
 import useLogin from '../hooks/useLogin';
 import classes from './Header.module.css';
+import { Link } from 'react-router-dom';
 //theme
 import "primereact/resources/themes/soho-light/theme.css";     
     
@@ -72,10 +73,13 @@ const logoutBtn = <Button className={classes.btn} onClick={logout}>Logout</Butto
 
 //const start = <img src={logo} alt="logo"/>
     return  <div className="card">
-   {user && <Menubar model={items} end={logoutBtn}/>}
-   {!user && <Menubar model={items} end={loginBtn}/>}
+   {user && <Menubar model={items} end={logoutBtn}/> }
+   {!user && <Menubar model={items} end={loginBtn}/> }
    
-           </div>
-}
+           
+
+
+
+           </div> }
 
 export default Header;

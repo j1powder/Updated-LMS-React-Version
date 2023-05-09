@@ -57,3 +57,7 @@
     color: #0b0b45 !important;
     border: black 1px solid !important;
 }
+
+.profile-card {
+    margin: 1rem;
+}

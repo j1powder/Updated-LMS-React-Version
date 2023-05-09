@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import './App.css';
 import Header from './Layout/Header';
 import Footer from './Layout/Footer';
@@ -6,7 +6,7 @@ import HomePage from './components/Homepage';
 import Register from './components/Register';
 import MyCourses from './LoggedinComponents/MyCourses';
 import CourseList from './LoggedinComponents/CourseList';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate, Outlet, Route, Routes, BrowserRouter } from 'react-router-dom';
 import useAuthContext from './hooks/useAuthContext';
 
 //theme
@@ -22,12 +22,19 @@ import useAuthContext from './hooks/useAuthContext';
 
 function App() {
   const { user } = useAuthContext();
+  const [userExists, setUserExists] = useState(false);
+ 
+  useEffect(()=>{
+    if(user){
+      setUserExists(true);
+    }
+  },[userExists, user])
 
 
  
- console.log(user)
+ console.log(userExists)
 
-let router = null;
+/* let router = null;
 
 
   router = createBrowserRouter([
@@ -35,14 +42,21 @@ let router = null;
     {path: '/Register', element: <Register currUser={user}/>  },
     {path: '/MyCourses', element: <MyCourses currUser={user} /> },
     {path: '/Courselist', element: <CourseList currUser={user}/>,}
-  ])
+  ]) */
 
  
 
 
   return <Fragment>
     <Header/>
-  <RouterProvider router={router} />
+    <BrowserRouter>
+    <Routes>
+    <Route path='/' element={<HomePage currUser={user}/>} />
+    <Route path='/Register' element={<Register currUser={user}/>} />
+    <Route path='/CourseList' element={ <CourseList currUser={user}/>} /> 
+    <Route path='/MyCourses' element={ <MyCourses currUser={user} /> } /> 
+    </Routes>
+    </BrowserRouter>
   <Footer/>
   </Fragment>
   

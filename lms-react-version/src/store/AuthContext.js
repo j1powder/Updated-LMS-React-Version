@@ -21,7 +21,8 @@ const authReducer = (state, action) => {
 const AuthContextProvider = ({ children }) => {
 const [state, dispatch] = useReducer(authReducer, {
     user: null,
-    authIsReady: false
+    authIsReady: false,
+    arcFlashAssigned: false,
 })
 
 useEffect(()=>{
