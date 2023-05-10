@@ -1,4 +1,4 @@
-import { Fragment, useState, useRef } from 'react';
+import { Fragment, useState, useRef, useEffect } from 'react';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import ReactPlayer from 'react-player';
@@ -7,6 +7,7 @@ import useFirestore from '../../hooks/useFirestore';
 import useAuthContext from '../../hooks/useAuthContext';
 import { arrayUnion, arrayRemove } from 'firebase/firestore';
 import './AerialLifts.css';
+import { projectFirestore } from '../../config';
        
 const Ammonia = (props) => {
 
@@ -14,6 +15,7 @@ const Ammonia = (props) => {
     const [finalExamOpen, setFinalExamOpen] = useState(false);
     const [scoreCalculated, setScoreCalculated] = useState(false);
     const [totalCorrect, setTotalCorrect] = useState(0);
+    const [usersCollection, setUsersCollection] = useState(null);
     const { documents, error } = useCollection('newcourses/Anhydrous Ammonia/Sections')
     const { updateDocument } = useFirestore('users');
     const { user } = useAuthContext();
@@ -36,12 +38,42 @@ for(let x = 0; x < final.length; x++){
 }
 
 
-const updateScoreHandler = async (e) => {
+useEffect(()=>{
+    const ref = projectFirestore.collection('users');
+    ref.onSnapshot((snapshot)=>{
+   let results = [];
+        snapshot.docs.forEach(doc => {
+           results.push({ ...doc.data(), id:doc.id })
+           setUsersCollection(results);
+       })
+    })
+   },[])
+
+
+
+
+   const updateScoreHandler = async (e) => {
     e.preventDefault();
-    await updateDocument(user.uid, {courses: arrayRemove({title:"Anhydrous Ammonia", score:"", passed:""})})
-    await updateDocument(user.uid, {courses: arrayUnion({title:"Anhydrous Ammonia", score:finalScore, passed:""})})
-    console.log(finalScore)
-    e.target.disabled='true';
+    if(usersCollection){
+        usersCollection.map((thisUser)=>{
+            if(thisUser.id === user.uid) {
+                thisUser.courses.map(async(course)=>{
+                    if(course.title === 'Anhydrous Ammonia' && course.score === ""){
+                        await updateDocument(user.uid, {courses: arrayRemove({title:"Anhydrous Ammonia", score:"", passed:"", isAssigned: true})})
+                        await updateDocument(user.uid, {courses: arrayUnion({title:"Anhydrous Ammonia", score:finalScore, passed:"", isAssigned: true})})
+                        console.log(finalScore)
+                        e.target.disabled='true';
+                        return
+                    } else {
+                        console.log(finalScore)
+                        e.target.disabled='true';
+                        
+                    }
+                    
+                })
+            }
+        })     
+        }
  } 
 
 
@@ -82,7 +114,7 @@ return <Fragment>
 <Card className='coursecard' >
 <div className='courseTitle' onClick={()=> {if(openItem == null) {setFinalExamOpen(true)}}}>Final Knowledge Check</div>
 {finalExamOpen && openItem === null &&<>
-<form onSubmit={updateScoreHandler} id="ammoniafinal">
+<form id="ammoniafinal">
 {finalExamOpen ? documents.map((section)=>{
     return <>
             
