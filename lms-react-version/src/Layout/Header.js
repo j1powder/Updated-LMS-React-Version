@@ -5,6 +5,7 @@ import { OverlayPanel } from 'primereact/overlaypanel';
 import useAuthContext from '../hooks/useAuthContext';
 import useLogout from '../hooks/useLogout';
 import useLogin from '../hooks/useLogin';
+import useCollection from '../hooks/useCollection';
 import classes from './Header.module.css';
 import { Link } from 'react-router-dom';
 //theme
@@ -23,34 +24,61 @@ const Header = () => {
     const { user } = useAuthContext();
     const { logout } = useLogout();
     const { login, error, isPending } = useLogin();
+    const { documents } = useCollection('users');
 
     const op = useRef();
-    console.log(op)
+    
      let items = []
-    if(user){
-        items = [
- 
-            {label: 'Dashboard', command: () => {
-                window.location.href='/'
-            }},
-            {label: 'Course Assign', command: ()=>{
-                window.location.href='/Courselist'
-    }},
-            {label: 'My Courses', command: () => {
-                window.location.href='/MyCourses'
-            }},
-        ]  
-    } else {
-    items = [
-    { label: 'Home', command: () => {
-        window.location.href = '/'
-    }},
 
-    {label: 'Register', command: () => {
-        window.location.href='/Register'
-    }}
-]
-   }
+    if(documents && user){
+    documents.map((thisUser)=>{
+        if(thisUser.id === user.uid) {
+            if(user && thisUser.userPermissionLevel === "admin"){
+                items = [
+     
+                    {label: 'Dashboard', command: () => {
+                        window.location.href='/'
+                    }},
+                    {label: 'Course Assign', command: ()=>{
+                        window.location.href='/Courselist'
+            }},
+                    {label: 'My Courses', command: () => {
+                        window.location.href='/MyCourses'
+                    }},
+                ]
+                } else if(user && thisUser.userPermissionLevel !== "admin"){
+                    items = [
+     
+                        {label: 'Dashboard', command: () => {
+                            window.location.href='/'
+                        }},
+    
+                        {label: 'My Courses', command: () => {
+                            window.location.href='/MyCourses'
+                        }},
+                    ] 
+                }
+
+
+        }
+
+
+        })
+    }
+    if(!user){
+        items = [
+              { label: 'Home', command: () => {
+                  window.location.href = '/'
+              }},
+          
+              {label: 'Register', command: () => {
+                  window.location.href='/Register'
+              }}
+          ]
+  }
+
+
+
 
    const loginHandler = (e) => {
     e.preventDefault()
