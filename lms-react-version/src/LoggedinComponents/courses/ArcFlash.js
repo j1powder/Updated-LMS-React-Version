@@ -20,7 +20,7 @@ const ArcFlash = (props) => {
     const { updateDocument } = useFirestore('users');
     const { user } = useAuthContext();
     const subBtnRef = useRef();
-
+    const finalVideo = "https://player.vimeo.com/video/455943382?h=2d45027c8e&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
     const finalScore = Math.round(totalCorrect/12 * 100)
 
 
@@ -129,9 +129,11 @@ return <Fragment>
 
 {finalExamOpen && openItem === null &&<>
 <form id="arcflashfinal">
+ <br/>   
+<ReactPlayer className='video-one' url={finalVideo} controls></ReactPlayer>
+<br/>
 {finalExamOpen ? documents.map((section)=>{
     return <>
-            
             {section.question1.isCorrect !== "I am ready to proceed" ? <>  
             <p id={section.question1.isCorrect} iscounted='true'><b key={section.question1.isCorrect}>{section.question1.questionText}</b></p>
             {section.question1.answerOptions.map((item)=>(<label key={item} className='answers' htmlFor={item}>

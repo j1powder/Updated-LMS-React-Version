@@ -20,6 +20,7 @@ const Ammonia = (props) => {
     const { updateDocument } = useFirestore('users');
     const { user } = useAuthContext();
     const subBtnRef = useRef();
+    const finalVideo = "https://player.vimeo.com/video/455943382?h=2d45027c8e&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
 
     const finalScore = Math.round(totalCorrect/13 * 100)
 
@@ -115,6 +116,9 @@ return <Fragment>
 <div className='courseTitle' onClick={()=> {if(openItem == null) {setFinalExamOpen(true)}}}>Final Knowledge Check</div>
 {finalExamOpen && openItem === null &&<>
 <form id="ammoniafinal">
+<br/>   
+<ReactPlayer className='video-one' url={finalVideo} controls></ReactPlayer>
+<br/>
 {finalExamOpen ? documents.map((section)=>{
     return <>
             
