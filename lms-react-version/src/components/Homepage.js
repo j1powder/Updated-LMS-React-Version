@@ -10,7 +10,7 @@ import { Button } from 'primereact/button';
 import useFirestore from '../hooks/useFirestore';
 
 
-const HomePage = (props) => {
+const HomePage = () => {
 //const [courseOpen, setCourseOpen] = useState(null);
 const [openEditProfile, setOpenEditProfile] = useState(false); 
 const { user } = useAuthContext();
@@ -42,14 +42,14 @@ const updateProfile = async (e) => {
  
 
     return <Fragment>
-        {!props.currUser ?
+        {!user ?
          <section id="bannertextsection" style={{backgroundImage: `url(${Banner})`, 
                                                  backgroundSize: 'cover',
                                                  backgroundPosition: 'center'}}>
             <h1>Online Learning Managment System</h1>
         </section>
 : <>
-<Panel header={`Welcome` + " " + user.displayName} >
+<Panel header={"Welcome " + user.displayName} >
 
 <h1>Welcome {user.displayName}</h1>
 </Panel>

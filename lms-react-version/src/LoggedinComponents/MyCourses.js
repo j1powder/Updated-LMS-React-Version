@@ -25,7 +25,7 @@ const { user } = useAuthContext();
 
     return <Fragment>
         <Panel header='My Scores'>
-        {documents && user && documents.map((currentuser)=>{
+        {documents && documents.map((currentuser)=>{
             return <> 
             {currentuser.id === user.uid ? <>
                 <table className={classes.table}>
@@ -45,7 +45,7 @@ const { user } = useAuthContext();
 
         </Panel>
         <Panel header="My Courses">
-        {documents && user && documents.map((currentuser)=>{
+        {documents && documents.map((currentuser)=>{
         return <>
             {currentuser.id === user.uid ? <>
             {currentuser.courses.map((course)=>{

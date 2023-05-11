@@ -22,7 +22,7 @@ const AuthContextProvider = ({ children }) => {
 const [state, dispatch] = useReducer(authReducer, {
     user: null,
     authIsReady: false,
-    arcFlashAssigned: false,
+    
 })
 
 useEffect(()=>{

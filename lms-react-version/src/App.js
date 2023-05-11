@@ -17,13 +17,23 @@ import useAuthContext from './hooks/useAuthContext';
 
 //icons
 //import "primeicons/primeicons.css";
+const ProtectedRoute = ({user, }) => {
 
-
+}
 
 function App() {
   const { user } = useAuthContext();
   const [userExists, setUserExists] = useState(false);
  
+  const ProtectedRoute = ({user, redirectPath= '/' }) => {
+    if(!user) {
+      return <Navigate to={redirectPath} replace />;
+    }
+    return <Outlet />;
+  }
+
+
+
   useEffect(()=>{
     if(user){
       setUserExists(true);
@@ -51,10 +61,12 @@ function App() {
     <Header/>
     <BrowserRouter>
     <Routes>
-    <Route path='/' element={<HomePage currUser={user}/>} />
-    <Route path='/Register' element={<Register currUser={user}/>} />
-    <Route path='/CourseList' element={ <CourseList currUser={user}/>} /> 
-    <Route path='/MyCourses' element={ <MyCourses currUser={user} /> } /> 
+    <Route path='/' element={<HomePage />} />
+    {!user &&<Route path='/Register' element={<Register />} />}
+     {user && <>
+    <Route path='/CourseList' element={ <CourseList />} /> 
+    <Route path='/MyCourses' element={ <MyCourses  /> } />
+     </>}
     </Routes>
     </BrowserRouter>
   <Footer/>
