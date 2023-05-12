@@ -16,13 +16,43 @@ const Ammonia = (props) => {
     const [scoreCalculated, setScoreCalculated] = useState(false);
     const [totalCorrect, setTotalCorrect] = useState(0);
     const [usersCollection, setUsersCollection] = useState(null);
+    const [videoEnded, setVideoEnded] = useState(false);
+    const [reviewAnswer1, setReviewAnswer1] = useState(null);
+    const [reviewAnswer2, setReviewAnswer2] = useState(null);
+
     const { documents, error } = useCollection('newcourses/Anhydrous Ammonia/Sections')
     const { updateDocument } = useFirestore('users');
     const { user } = useAuthContext();
     const subBtnRef = useRef();
     const finalVideo = "https://player.vimeo.com/video/455943382?h=2d45027c8e&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+    const finalScore = Math.round(totalCorrect/12 * 100)
 
-    const finalScore = Math.round(totalCorrect/13 * 100)
+
+    useEffect(()=>{
+        const ref = projectFirestore.collection('users');
+        ref.onSnapshot((snapshot)=>{
+       let results = [];
+            snapshot.docs.forEach(doc => {
+               results.push({ ...doc.data(), id:doc.id })
+               setUsersCollection(results);
+           })
+        })
+       },[])
+
+       if(usersCollection){
+       usersCollection.map((thisUser)=>{
+           if(thisUser.id === user.uid) {
+               thisUser.courses.map((course)=>{
+                   if(course.title === 'Anhydrous Ammonia' && course.title !== ""){
+                    
+                   }
+                   
+               })
+           }
+       })     
+       }
+
+       //console.log(theseCourses)
 
 const getFinalScore = async (e) => {
 e.preventDefault()
@@ -39,21 +69,7 @@ for(let x = 0; x < final.length; x++){
 }
 
 
-useEffect(()=>{
-    const ref = projectFirestore.collection('users');
-    ref.onSnapshot((snapshot)=>{
-   let results = [];
-        snapshot.docs.forEach(doc => {
-           results.push({ ...doc.data(), id:doc.id })
-           setUsersCollection(results);
-       })
-    })
-   },[])
-
-
-
-
-   const updateScoreHandler = async (e) => {
+const updateScoreHandler = async (e) => {
     e.preventDefault();
     if(usersCollection){
         usersCollection.map((thisUser)=>{
@@ -64,11 +80,10 @@ useEffect(()=>{
                         await updateDocument(user.uid, {courses: arrayUnion({title:"Anhydrous Ammonia", score:finalScore, passed:"", isAssigned: true})})
                         console.log(finalScore)
                         e.target.disabled='true';
-                        return
                     } else {
                         console.log(finalScore)
                         e.target.disabled='true';
-                        
+                        //alert("You've already taken this course. Please contact an administrator to request a retake.")
                     }
                     
                 })
@@ -77,9 +92,7 @@ useEffect(()=>{
         }
  } 
 
-
-
-
+console.log(videoEnded)
 return <Fragment>
 <p >Hello There</p>
 {documents && 
@@ -92,14 +105,21 @@ return <Fragment>
     <br/>
     <br/>
 {openItem === section.id ? <>
-            <ReactPlayer className='video-one' url={section.video}  controls></ReactPlayer>
+            <ReactPlayer onReady={()=>{setVideoEnded(false); setReviewAnswer1(null); setReviewAnswer2(null)}} onEnded={()=>{setVideoEnded(true)}} className='video-one' url={section.video}  controls></ReactPlayer>
              <form>
               <p><b>{section.question1.questionText}</b></p>
-              {section.question1.answerOptions.map((item)=>(<label className='answers'><input  className='answerinput' type='radio' name='selection1' />{item}</label>))}
+              {section.question1.answerOptions.map((item)=>(<label style={videoEnded ? {fontWeight: "bold"}: null} className='answers'><input onChange={(e)=>{setReviewAnswer1(e.target.id)}} id={item} disabled={videoEnded ? false : true} className='answerinput' type='radio' name='selection1' />{item}</label>))}
               <br/>
+              {reviewAnswer1 === section.question1.isCorrect && <p style={{color: "green"}}>Correct Answer!</p>}
+              {reviewAnswer1 !== null && reviewAnswer1 !== section.question1.isCorrect ? <p style={{color: 'red'}}>Incorrect. The correct answer is {section.question1.isCorrect}</p> : null}
+
+
               <p><b>{section.question2.questionText}</b></p>
-              {section.question2.answerOptions.map((item)=>(<label className='answers'><input className='answerinput' type='radio' name='selection2'/>{item}</label>))}  
+              {section.question2.answerOptions.map((item)=>(<label style={videoEnded ? {fontWeight: "bold"}: null} className='answers'><input onChange={(e)=>{setReviewAnswer2(e.target.id)}} id={item} disabled={videoEnded ? false: true} className='answerinput' type='radio' name='selection2'/>{item}</label>))}  
               <br/>
+              {reviewAnswer2 === section.question2.isCorrect && <p style={{color: "green"}}>Correct Answer!</p>}
+              {reviewAnswer2 !== null && reviewAnswer2 !== section.question2.isCorrect ? <p style={{color: 'red'}}>Incorrect. The correct answer is {section.question2.isCorrect}</p> : null}
+
               <br/>
               </form>
               <Button style={{backgroundColor:'gray', border: 'black'}} onClick={()=>{setOpenItem(null);} }>Close</Button>
@@ -114,14 +134,16 @@ return <Fragment>
 })}
 <Card className='coursecard' >
 <div className='courseTitle' onClick={()=> {if(openItem == null) {setFinalExamOpen(true)}}}>Final Knowledge Check</div>
+
+
+
 {finalExamOpen && openItem === null &&<>
 <form id="ammoniafinal">
-<br/>   
+ <br/>   
 <ReactPlayer className='video-one' url={finalVideo} controls></ReactPlayer>
 <br/>
 {finalExamOpen ? documents.map((section)=>{
     return <>
-            
             {section.question1.isCorrect !== "I am ready to proceed" ? <>  
             <p id={section.question1.isCorrect} iscounted='true'><b key={section.question1.isCorrect}>{section.question1.questionText}</b></p>
             {section.question1.answerOptions.map((item)=>(<label key={item} className='answers' htmlFor={item}>
@@ -157,7 +179,7 @@ return <Fragment>
 : null}
 <br/>
 
-{!scoreCalculated && <Button ref={subBtnRef} onClick={getFinalScore} className='btn-final' >Submit</Button>}
+{!scoreCalculated && <Button onClick={getFinalScore} className='btn-final' >Submit</Button>}
 {scoreCalculated && <Button className='btn-final' onClick={updateScoreHandler}>Save</Button>} 
 </form>
 <h2>Your Final Score is: {finalScore}%</h2>

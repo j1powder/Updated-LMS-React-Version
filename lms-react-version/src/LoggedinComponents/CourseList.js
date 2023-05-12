@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect, useRef } from "react";
+import { Fragment, useState, useEffect } from "react";
 import useCollection from "../hooks/useCollection";
 import useFirestore from "../hooks/useFirestore";
 import useAuthContext from "../hooks/useAuthContext";
@@ -9,7 +9,6 @@ import {arrayUnion} from 'firebase/firestore'
 import 'firebase/compat/firestore'
 import classes from './CourseList.module.css';
 import { projectFirestore } from "../config";
-import MyCourses from "./MyCourses";
 
 
 const CourseList = () => {
@@ -48,39 +47,29 @@ usersCollection.map((thisUser)=>{
 })     
 } 
 
-//console.log(userToAssign)
-
-/* if(usersCollection){
-    usersCollection.map((thisUser)=>{
-        if(thisUser.firstName + " " + thisUser.lastName === employeeSelected){
-            console.log(employeeSelected)
-
-        }
-    })
-} */
-
-
 
 
 const updateCourseHandler = async (e) => {
     if(theseCourses.includes(courseSelected) === true){
         console.log(courseSelected, employeeSelected)
+        alert(`Whoa! hold it there partner. ${courseSelected} is already assigned to ${employeeSelected}. Please try a different course`)
     } else{
         await updateDocument(userToAssign, {courses:arrayUnion({title:courseSelected, score:"", passed:"", isAssigned:true})});
         console.log(employeeSelected, courseSelected)
+        alert(`Success! You just assigned ${courseSelected} to ${employeeSelected}`)
     }
     
      } 
 
 const selectCourseHandler = (e) => {
-    setCourseSelected(e.target.textContent)
-    e.target.style.backgroundColor='lightgray'
+   setCourseSelected(e.target.textContent)
+    //e.target.style.backgroundColor='gray'
    // console.log(e.target.textContent)
 }
 
 const selectEmployeeHandler = (e) => {
 setEmployeeSelected(e.target.textContent)
-e.target.style.backgroundColor='lightgray'
+//e.target.style.backgroundColor='gray';
 //console.log(e.target.textContent)
 }
 
@@ -90,11 +79,11 @@ console.log(courseSelected, employeeSelected)
 
 return <Fragment>
     <Panel header="Select Course">
-{user && <>
-{documents && documents.map((courses)=>{
+{documents && <>
+{documents.map((courses)=>{
     return <>
         
-        <Card key={courses.id}  className={classes.courseassign} title={courses.id} onClick={selectCourseHandler}></Card>
+        <Card key={courses.id} style={courseSelected === courses.id ? {backgroundColor:"Gray"} : {backgroundColor:"White"}} className={classes.courseassign} title={courses.id} onClick={selectCourseHandler} onMouseEnter={(e)=>{ console.log('hello')}}></Card>
     </>
 })
 
@@ -102,10 +91,10 @@ return <Fragment>
 </>}
 </Panel>
 <Panel header="Select Employee">
-{user && <>
-{user && usersCollection && usersCollection.map((selectUser)=>{
+{usersCollection && <>
+{usersCollection.map((selectUser)=>{
 return <>
-<Card className={classes.courseassign} title={selectUser.firstName + " " + selectUser.lastName} onClick={selectEmployeeHandler}></Card>
+<Card className={classes.courseassign} style={employeeSelected === selectUser.firstName + " " + selectUser.lastName ? {backgroundColor:"Gray"} : {backgroundColor:"White"}} title={selectUser.firstName + " " + selectUser.lastName} onClick={selectEmployeeHandler}></Card>
 
 </>
 

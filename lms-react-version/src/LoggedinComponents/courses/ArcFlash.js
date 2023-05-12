@@ -16,6 +16,10 @@ const ArcFlash = (props) => {
     const [scoreCalculated, setScoreCalculated] = useState(false);
     const [totalCorrect, setTotalCorrect] = useState(0);
     const [usersCollection, setUsersCollection] = useState(null);
+    const [videoEnded, setVideoEnded] = useState(false);
+    const [reviewAnswer1, setReviewAnswer1] = useState(null);
+    const [reviewAnswer2, setReviewAnswer2] = useState(null);
+
     const { documents, error } = useCollection('newcourses/Arc Flash Safety/Sections')
     const { updateDocument } = useFirestore('users');
     const { user } = useAuthContext();
@@ -35,7 +39,6 @@ const ArcFlash = (props) => {
         })
        },[])
 
-       let theseCourses = [];
        if(usersCollection){
        usersCollection.map((thisUser)=>{
            if(thisUser.id === user.uid) {
@@ -49,7 +52,7 @@ const ArcFlash = (props) => {
        })     
        }
 
-       console.log(theseCourses)
+       //console.log(theseCourses)
 
 const getFinalScore = async (e) => {
 e.preventDefault()
@@ -80,7 +83,7 @@ const updateScoreHandler = async (e) => {
                     } else {
                         console.log(finalScore)
                         e.target.disabled='true';
-                        alert("You've already taken this course. Please contact an administrator to request a retake.")
+                        //alert("You've already taken this course. Please contact an administrator to request a retake.")
                     }
                     
                 })
@@ -89,7 +92,7 @@ const updateScoreHandler = async (e) => {
         }
  } 
 
-
+console.log(videoEnded)
 return <Fragment>
 <p >Hello There</p>
 {documents && 
@@ -102,14 +105,21 @@ return <Fragment>
     <br/>
     <br/>
 {openItem === section.id ? <>
-            <ReactPlayer className='video-one' url={section.video}  controls></ReactPlayer>
+            <ReactPlayer onReady={()=>{setVideoEnded(false); setReviewAnswer1(null); setReviewAnswer2(null)}} onEnded={()=>{setVideoEnded(true)}} className='video-one' url={section.video}  controls></ReactPlayer>
              <form>
               <p><b>{section.question1.questionText}</b></p>
-              {section.question1.answerOptions.map((item)=>(<label className='answers'><input  className='answerinput' type='radio' name='selection1' />{item}</label>))}
+              {section.question1.answerOptions.map((item)=>(<label style={videoEnded ? {fontWeight: "bold"}: null} className='answers'><input onChange={(e)=>{setReviewAnswer1(e.target.id)}} id={item} disabled={videoEnded ? false : true} className='answerinput' type='radio' name='selection1' />{item}</label>))}
               <br/>
+              {reviewAnswer1 === section.question1.isCorrect && <p style={{color: "green"}}>Correct Answer!</p>}
+              {reviewAnswer1 !== null && reviewAnswer1 !== section.question1.isCorrect ? <p style={{color: 'red'}}>Incorrect. The correct answer is {section.question1.isCorrect}</p> : null}
+
+
               <p><b>{section.question2.questionText}</b></p>
-              {section.question2.answerOptions.map((item)=>(<label className='answers'><input className='answerinput' type='radio' name='selection2'/>{item}</label>))}  
+              {section.question2.answerOptions.map((item)=>(<label style={videoEnded ? {fontWeight: "bold"}: null} className='answers'><input onChange={(e)=>{setReviewAnswer2(e.target.id)}} id={item} disabled={videoEnded ? false: true} className='answerinput' type='radio' name='selection2'/>{item}</label>))}  
               <br/>
+              {reviewAnswer2 === section.question2.isCorrect && <p style={{color: "green"}}>Correct Answer!</p>}
+              {reviewAnswer2 !== null && reviewAnswer2 !== section.question2.isCorrect ? <p style={{color: 'red'}}>Incorrect. The correct answer is {section.question2.isCorrect}</p> : null}
+
               <br/>
               </form>
               <Button style={{backgroundColor:'gray', border: 'black'}} onClick={()=>{setOpenItem(null);} }>Close</Button>
