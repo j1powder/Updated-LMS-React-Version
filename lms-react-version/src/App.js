@@ -10,6 +10,7 @@ import MyCourses from './LoggedinComponents/MyCourses';
 import CourseList from './LoggedinComponents/CourseList';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import useAuthContext from './hooks/useAuthContext';
+import Certificate from './components/Certificate';
 //theme
 //import "primereact/resources/themes/lara-light-indigo/theme.css";     
     
@@ -59,7 +60,8 @@ function App() {
     <Route path='/' element={<HomePage />} />
     {!user &&<Route path='/Register' element={<Register />} />}
     {user && <Route path='/CourseList' element={<CourseList/>} />} 
-    {user && <Route path='/MyCourses' element={ <MyCourses/>  } />}  
+    {user && <Route path='/MyCourses' element={ <MyCourses/>  } />}
+    <Route path= '/Certificate' element={<Certificate />}/>  
      
     </Routes>
     </BrowserRouter>

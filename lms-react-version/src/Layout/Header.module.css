@@ -19,3 +19,20 @@
     border: 2px solid black !important;
     color: black !important;
 }
+
+.padding {
+    padding: 1rem;
+}
+
+.marginright {
+    margin-right: 2rem !important;
+}
+
+.color {
+    color: #1189dd !important;
+}
+
+.loginbtn {
+    background-color: #1189dd !important;
+    color: white !important;
+}

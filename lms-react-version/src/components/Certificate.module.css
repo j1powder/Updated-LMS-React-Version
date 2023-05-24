@@ -1,0 +1,16 @@
+.main {
+position: relative !important;
+}
+
+.date {
+    position: absolute !important;
+    top: 30%;
+    left: 30%;
+    color: black !important;
+    padding-right: 20%;
+}
+
+.certpic {
+    width: 100% !important;
+    height: auto !important;
+}
