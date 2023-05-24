@@ -115,7 +115,7 @@ const closeHandler = () => setShow(false);
 console.log(email)
     return  <>
     
-    <Navbar bg='dark' variant='dark' expand='sm'>
+    <Navbar bg='light' variant='light' expand='sm'>
         <Container>
             <Navbar.Brand className={classes.color}>
                 JJ LMS

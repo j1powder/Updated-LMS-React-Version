@@ -14,3 +14,9 @@ position: relative !important;
     width: 100% !important;
     height: auto !important;
 }
+
+@media screen and (min-width: 400px) {
+    .main {
+      background-color: lightgreen;
+    }
+  }

@@ -1,6 +1,7 @@
 import { Fragment, useState, useRef, useEffect } from 'react';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
+import Modal from 'react-bootstrap/Modal';
 import ReactPlayer from 'react-player';
 import useCollection from '../../hooks/useCollection';
 import useFirestore from '../../hooks/useFirestore';
@@ -19,6 +20,7 @@ const ArcFlash = (props) => {
     const [videoEnded, setVideoEnded] = useState(false);
     const [reviewAnswer1, setReviewAnswer1] = useState(null);
     const [reviewAnswer2, setReviewAnswer2] = useState(null);
+    const [show, setShow] = useState(false);
 
     const { documents, error } = useCollection('newcourses/Arc Flash Safety/Sections')
     const { updateDocument } = useFirestore('users');
@@ -91,6 +93,26 @@ const updateScoreHandler = async (e) => {
         })     
         }
  } 
+
+const openModal = (e) => {
+    e.preventDefault()
+    setShow(true);
+    const final = document.getElementById('arcflashfinal')
+for(let x = 0; x < final.length; x++){
+    if(final[x].checked && final[x].isCorrect === 'true'){
+       setTotalCorrect(score => score + 1);
+       e.target.disabled=true;
+       setScoreCalculated(true);
+
+    }
+}
+}
+
+const closeModal = () => {
+    setShow(false);
+}
+
+
 
 console.log(videoEnded)
 return <Fragment>
@@ -179,7 +201,15 @@ return <Fragment>
 : null}
 <br/>
 
-{!scoreCalculated && <Button onClick={getFinalScore} className='btn-final' >Submit</Button>}
+{!scoreCalculated && <Button onClick={openModal} className='btn-final' >Submit</Button>}
+<Modal show={show} onHide={closeModal} centered>
+<Modal.Body>
+<h2>Your Final Score is: {finalScore}%</h2>
+<p>Would you like to save this score?</p>
+<br/>
+<Button className='btn-final' onClick={updateScoreHandler}>Save Score</Button>
+</Modal.Body>
+</Modal>
 {scoreCalculated && <Button className='btn-final' onClick={updateScoreHandler}>Save</Button>} 
 </form>
 <h2>Your Final Score is: {finalScore}%</h2>

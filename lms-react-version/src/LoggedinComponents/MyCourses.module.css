@@ -6,7 +6,7 @@
 
 .table{
     border: 1px solid black;
-    width: 50%;
+    width: 75%;
     border-radius: 5px;
     box-shadow: 1px 1px 1px 1px grey;
     margin: .3rem;
@@ -20,5 +20,24 @@
     text-align: left;
     padding: 1rem;
     font-weight: bold;
+ 
 
 }
+
+.column {
+    font-weight: bold !important;
+    font-size: 110%;
+    color: #121212;
+    padding: 1rem;
+    text-align: center;
+}
+.row {
+    box-shadow: 1px 1px 4px 1px black;
+    border-radius: 10px;
+}
+
+.panel {
+    color:#121212 !important;
+    font-size:x-large;
+}
+
