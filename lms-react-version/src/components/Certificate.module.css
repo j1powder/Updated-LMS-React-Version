@@ -1,5 +1,7 @@
 .main {
 position: relative !important;
+width: 800px;
+font-size: 15px;
 }
 
 .date {

@@ -1,0 +1,17 @@
+
+.list {
+    margin: 1.5rem;
+}
+
+.listItem {
+    list-style: none;
+    padding: .5rem;
+    box-shadow: 1px 1px 4px 1px grey;
+    border-radius: 5px;
+    font-weight: 600;
+    width: 60%;
+}
+
+.topRow {
+    color: #1189dd;
+}

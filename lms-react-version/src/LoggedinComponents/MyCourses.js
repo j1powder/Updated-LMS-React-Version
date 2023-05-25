@@ -14,6 +14,7 @@ import ArcFlash from './courses/ArcFlash';
 import AbrasiveBlasting from './courses/AbrasiveBlasting';
 import Ammonia from './courses/AnhydrousAmmonia';
 import Certificate from '../components/Certificate';
+import { projectStorage } from '../config';
 
 
 
@@ -23,7 +24,13 @@ const [courseOpen, setCourseOpen] = useState(null);
 const {documents, error} = useCollection('users');
 const [show, setShow] = useState();
 const [courseTitle, setCourseTitle] = useState();
+const [courseDate, setCourseDate] = useState();
 const { user } = useAuthContext();
+
+
+//const uploadPath = `certificates/${user.uid}/report.pdf`;
+//const certFile = await projectStorage.ref(uploadPath)
+
 
 const openModal = () => setShow(true);
 const closeModal = () => setShow(false);
@@ -32,6 +39,7 @@ const closeModal = () => setShow(false);
 
 const testData = (e) => {
     setCourseTitle(e.target.parentElement.getAttribute('id'));
+    setCourseDate(e.target.parentElement.getAttribute('date'));
     setShow(true);
 }
 
@@ -56,14 +64,15 @@ const testData = (e) => {
             {currentuser.courses.map((course)=>{
                 return <>
                          <Container>
-                    <Row id={course.title} className={classes.row} key={course.title}>
-                        <Col className={classes.column} md={4}><p>Course</p><p>{course.title}</p></Col>
-                        <Col className={classes.column} md={4}><p>Score</p><p>{course.score + '%'}</p></Col>
-                        {course.score > 79 ? <Col onClick={testData} className={classes.column} md={4} style={{textDecoration:"underline", color:"blue", cursor: "pointer"}}>View Certificate</Col> : null}
+                    <Row date={course.date} id={course.title} className={classes.row} key={course.title}>
+                        <Col className={classes.column} md={3}><p>Date:</p>{course.date}</Col>
+                        <Col className={classes.column} md={3}><p>Course:</p><p>{course.title}</p></Col>
+                        <Col className={classes.column} md={3}><p>Score:</p><p>{course.score + '%'}</p></Col>
+                        {course.score > 79 ? <Col onClick={testData} className={classes.column} md={3} style={{textDecoration:"underline", color:"blue", cursor: "pointer"}}>View Certificate</Col> : null}
                     </Row>
                 </Container><br/>
-                <Modal show={show} onHide={closeModal} size="lg">
-                  <Certificate title={courseTitle} />  
+                <Modal show={show} onHide={closeModal} fullscreen='md-down' size='lg'>
+                  <Certificate title={courseTitle} date={courseDate} />  
                 </Modal>
               {/*   <table className={classes.table}>
                 <tbody><tr><td>{course.title}</td><td>{course.score}</td><td>View Certificate</td></tr></tbody>    

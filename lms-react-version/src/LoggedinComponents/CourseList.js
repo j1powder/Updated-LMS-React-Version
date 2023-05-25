@@ -18,6 +18,7 @@ const CourseList = () => {
  const [usersCollection, setUsersCollection] = useState(null);
  const [courseSelected, setCourseSelected] = useState();
  const [employeeSelected, setEmployeeSelected] = useState(); 
+ const [thisNewUser, setThisNewUser] = useState("");
  
 useEffect(()=>{
  const ref = projectFirestore.collection('users');
@@ -30,6 +31,23 @@ let results = [];
  })
 },[])
 
+
+    let thisCompany; 
+
+        if(usersCollection && user){
+            usersCollection.map((newUser)=>{
+                if(newUser.id === user.uid){
+                 return  console.log(thisCompany = newUser.company);
+                    
+                }
+            })}
+
+console.log(thisCompany)
+ 
+
+    
+
+console.log(thisNewUser)
 
 
 
@@ -54,7 +72,7 @@ const updateCourseHandler = async (e) => {
         console.log(courseSelected, employeeSelected)
         alert(`Whoa! hold it there partner. ${courseSelected} is already assigned to ${employeeSelected}. Please try a different course`)
     } else{
-        await updateDocument(userToAssign, {courses:arrayUnion({title:courseSelected, score:"", passed:"", isAssigned:true})});
+        await updateDocument(userToAssign, {courses:arrayUnion({title:courseSelected, score:"",date: "", passed:"", isAssigned:true})});
         console.log(employeeSelected, courseSelected)
         alert(`Success! You just assigned ${courseSelected} to ${employeeSelected}`)
     }
@@ -93,10 +111,13 @@ return <Fragment>
 <Panel header="Select Employee">
 {usersCollection && <>
 {usersCollection.map((selectUser)=>{
-return <>
+if(selectUser.company === thisCompany){
+  return  <Card className={classes.courseassign} style={employeeSelected === selectUser.firstName + " " + selectUser.lastName ? {backgroundColor:"Gray"} : {backgroundColor:"White"}} title={selectUser.firstName + " " + selectUser.lastName} onClick={selectEmployeeHandler}></Card>  
+}
+/* return <>
 <Card className={classes.courseassign} style={employeeSelected === selectUser.firstName + " " + selectUser.lastName ? {backgroundColor:"Gray"} : {backgroundColor:"White"}} title={selectUser.firstName + " " + selectUser.lastName} onClick={selectEmployeeHandler}></Card>
 
-</>
+</> */
 
 })}
 <br/>

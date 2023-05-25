@@ -32,7 +32,7 @@ const Certificate = (props) => {
  
     const generatePDF = () => {
 
-        const certificate = new JsPDF('landscape','px',[thisCert.current.clientWidth * 1.1, thisCert.current.clientHeight * 1.1]);
+        const certificate = new JsPDF('landscape','px',[thisCert.current.clientWidth * 1.05, thisCert.current.clientHeight * 1.05]);
         certificate.html(document.querySelector('#report')).then(() => {
         certificate.save('report.pdf');
         console.log(width, height)
@@ -79,17 +79,17 @@ const Certificate = (props) => {
                     <div className={classes.main}>
                     <main id='report' className={classes.main} >
                                     <img ref={thisCert}  className={classes.certpic} src={Cert} alt="my certificate" />
-                                    <div className={classes.date} style={width < 700 ? {fontSize: 10} : null}>
-                                    <h6 >{date.toLocaleString('en-US', todaysDate)}</h6>
-                                    <br/>
-                                    <h4 >{thisUser.firstName + ' ' + thisUser.lastName}</h4>
-                                    <h6 >Has Successfully completed</h6>
-                                    <h5 >{props.title}</h5>
-                                    <br/>
-                                    <p >an online course authorized by <b>Company Name</b> and offered through JJ LMS.</p>
+                                    <div className={classes.date} style={width < 700 ? {fontSize: 8} : null}>
+                                    <p>{props.date}</p>
+                                    
+                                    <p><b>{thisUser.firstName + ' ' + thisUser.lastName}</b></p>
+                                    <p>Has Successfully completed</p>
+                                    <p><b>{props.title}</b></p>
+                                    
+                                    <p>an online course authorized by <b>{thisUser.company}</b> and offered through JJ LMS.</p>
                 
-                                    <p >Presented By: </p>
-                                    <h5 >Instructor Name</h5>
+                                    <p>Presented By: </p>
+                                    <p><b>{thisUser.company}</b></p>
                                     </div>
                     </main>
                     </div>

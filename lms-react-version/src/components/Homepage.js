@@ -8,6 +8,7 @@ import { Panel } from 'primereact/panel';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import useFirestore from '../hooks/useFirestore';
+import Roster from '../LoggedinComponents/Roster';
 
 
 const HomePage = () => {
@@ -90,6 +91,9 @@ const updateProfile = async (e) => {
 </Panel> 
 
 </>}  
+
+
+
         </Fragment>
 }
 

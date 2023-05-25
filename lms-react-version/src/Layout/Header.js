@@ -126,6 +126,14 @@ console.log(email)
             {!user && <Nav.Link href='/' className={classes.color}>Home</Nav.Link>}
             {!user && <Nav.Link href='/Register' className={classes.color}>Register</Nav.Link>}
             {user && <Nav.Link href='/' className={classes.color}>Dashboard</Nav.Link>}
+            {user && documents && documents.map((thisUser)=>{
+                if(thisUser.id === user.uid && thisUser.userPermissionLevel === 'admin'){
+                   return <>
+                   <Nav.Link href='/Courselist' className={classes.color}>Assign Courses</Nav.Link>
+                   <Nav.Link href='/roster' className={classes.color}>My Employees</Nav.Link>
+                   </>
+                }
+            })}
             {user && <Nav.Link  href='/MyCourses' className={classes.color}>My Courses</Nav.Link>}
             
             

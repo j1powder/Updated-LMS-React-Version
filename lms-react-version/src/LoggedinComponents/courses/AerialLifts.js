@@ -76,8 +76,14 @@ const updateScoreHandler = async (e) => {
             if(thisUser.id === user.uid) {
                 thisUser.courses.map(async(course)=>{
                     if(course.title === 'Aerial Lifts' && course.score === ""){
-                        await updateDocument(user.uid, {courses: arrayRemove({title:"Aerial Lifts", score:"", passed:"", isAssigned: true})})
-                        await updateDocument(user.uid, {courses: arrayUnion({title:"Aerial Lifts", score:finalScore, passed:"", isAssigned: true})})
+                        const date = new Date();
+                        const todaysDate = {
+                            month: 'long',
+                            year: 'numeric',
+                            day: 'numeric',
+                        };
+                        await updateDocument(user.uid, {courses: arrayRemove({title:"Aerial Lifts", score:"", date:"", passed:"", isAssigned: true})})
+                        await updateDocument(user.uid, {courses: arrayUnion({title:"Aerial Lifts", score:finalScore, date: date.toLocaleString('en-US', todaysDate), passed:"", isAssigned: true})})
                         console.log(finalScore)
                         e.target.disabled='true';
                     } else {
@@ -145,7 +151,7 @@ return <Fragment>
 {finalExamOpen ? documents.map((section)=>{
     return <>
             {section.question1.isCorrect !== "I am ready to proceed" ? <>  
-            <p id={section.question1.isCorrect} iscounted='true'><b key={section.question1.isCorrect}>{section.question1.questionText}</b></p>
+            <div id={section.question1.isCorrect} iscounted='true'><b key={section.question1.isCorrect}>{section.question1.questionText}</b></div>
             {section.question1.answerOptions.map((item)=>(<label key={item} className='answers' htmlFor={item}>
                 <input 
                 onChange={(e)=>{if(e.target.id === section.question1.isCorrect){e.target.disabled="true"; e.target.isCorrect='true' } else{e.target.disabled='true'; e.target.isCorrect='false'}}} 
@@ -158,7 +164,8 @@ return <Fragment>
                 {item}
                 </label>))}
 </>: null}
-            <p key={section.question2.isCorrect} iscounted='true'><b key={section.question2.isCorrect}>{section.question2.questionText}</b></p>
+<br/>
+            <div key={section.question2.isCorrect} iscounted='true'><b key={section.question2.isCorrect}>{section.question2.questionText}</b></div>
             {section.question2.answerOptions.map((item)=>(<label key={item} className='answers' htmlFor={item}>
                 <input onChange={(e)=>{if(e.target.id === section.question2.isCorrect){e.target.disabled='true'; e.target.isCorrect='true'} else{e.target.disabled='true'; e.target.isCorrect='false'}}}
                 key={item} 
@@ -169,7 +176,7 @@ return <Fragment>
                 />
                 {item}
                 </label>))}
-
+<br/>
             
             </>
             

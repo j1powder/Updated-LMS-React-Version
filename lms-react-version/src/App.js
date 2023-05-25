@@ -8,6 +8,7 @@ import HomePage from './components/Homepage';
 import Register from './components/Register';
 import MyCourses from './LoggedinComponents/MyCourses';
 import CourseList from './LoggedinComponents/CourseList';
+import Roster from './LoggedinComponents/Roster';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import useAuthContext from './hooks/useAuthContext';
 import Certificate from './components/Certificate';
@@ -61,6 +62,7 @@ function App() {
     {!user &&<Route path='/Register' element={<Register />} />}
     {user && <Route path='/CourseList' element={<CourseList/>} />} 
     {user && <Route path='/MyCourses' element={ <MyCourses/>  } />}
+    {user && <Route path='/Roster' element={<Roster />} />}
     <Route path= '/Certificate' element={<Certificate />}/>  
      
     </Routes>
