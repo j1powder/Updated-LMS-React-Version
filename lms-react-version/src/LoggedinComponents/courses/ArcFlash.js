@@ -54,21 +54,7 @@ const ArcFlash = (props) => {
        })     
        }
 
-       //console.log(theseCourses)
 
-const getFinalScore = async (e) => {
-e.preventDefault()
-const final = document.getElementById('arcflashfinal')
-for(let x = 0; x < final.length; x++){
-    if(final[x].checked && final[x].isCorrect === 'true'){
-       setTotalCorrect(score => score + 1);
-       e.target.disabled=true;
-       setScoreCalculated(true);
-
-    }
-}
-
-}
 
 
 const updateScoreHandler = async (e) => {
@@ -92,7 +78,6 @@ const updateScoreHandler = async (e) => {
                     } else {
                         console.log(finalScore)
                         e.target.disabled='true';
-                        //alert("You've already taken this course. Please contact an administrator to request a retake.")
                     }
                     
                 })
@@ -218,10 +203,8 @@ return <Fragment>
 <Button className='btn-final' onClick={updateScoreHandler}>Save Score</Button>
 </Modal.Body>
 </Modal>
-{scoreCalculated && <Button className='btn-final' onClick={updateScoreHandler}>Save</Button>} 
-</form>
-<h2>Your Final Score is: {finalScore}%</h2>
 
+</form>
 </>
 }
 </Card>
@@ -233,4 +216,4 @@ return <Fragment>
 </Fragment>
 }
 
-export default ArcFlash;
+export default ArcFlash; 

@@ -9,9 +9,10 @@ import Register from './components/Register';
 import MyCourses from './LoggedinComponents/MyCourses';
 import CourseList from './LoggedinComponents/CourseList';
 import Roster from './LoggedinComponents/Roster';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 import useAuthContext from './hooks/useAuthContext';
-import Certificate from './components/Certificate';
+import useCollection from './hooks/useCollection';
+//import Certificate from './components/Certificate';
 //theme
 //import "primereact/resources/themes/lara-light-indigo/theme.css";     
     
@@ -23,8 +24,9 @@ import Certificate from './components/Certificate';
 
 
 function App() {
-  const { user } = useAuthContext();
+  const { user, authIsReady } = useAuthContext();
   const [userExists, setUserExists] = useState(false);
+  const { documents, error } = useCollection('users');
  
 
 
@@ -40,6 +42,16 @@ function App() {
  
  console.log(userExists)
 
+let permissionLevel;
+if(documents && user){
+documents.map((thisUser)=>{
+  if(thisUser.id === user.uid){
+    return console.log(permissionLevel = thisUser.userPermissionLevel)
+  }
+})
+}
+
+console.log(permissionLevel);
 /* let router = null;
 
 
@@ -54,20 +66,20 @@ function App() {
 
 
   return <Fragment>
+    
+    {authIsReady && documents &&<>
     <Header/>
     <BrowserRouter>
     <Routes>
-    
     <Route path='/' element={<HomePage />} />
-    {!user &&<Route path='/Register' element={<Register />} />}
-    {user && <Route path='/CourseList' element={<CourseList/>} />} 
-    {user && <Route path='/MyCourses' element={ <MyCourses/>  } />}
-    {user && <Route path='/Roster' element={<Roster />} />}
-    <Route path= '/Certificate' element={<Certificate />}/>  
-     
+    <Route path='/Register' element={!user ? <Register /> : <Navigate to='/' />} />
+    <Route path='/CourseList' element={user && permissionLevel === 'admin' ? <CourseList/> : <Navigate to='/' />} />
+    <Route path='/MyCourses' element={user ? <MyCourses/> : <Navigate to='/'/> } />
+    <Route path='/Roster' element={user && permissionLevel === 'admin' ? <Roster /> : <Navigate to='/'/>} />
     </Routes>
     </BrowserRouter>
   <Footer/>
+  </>}
   </Fragment>
   
   

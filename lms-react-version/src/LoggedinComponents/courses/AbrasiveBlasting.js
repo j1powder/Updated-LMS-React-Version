@@ -1,6 +1,7 @@
 import { Fragment, useState, useRef, useEffect } from 'react';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
+import Modal from 'react-bootstrap/Modal';
 import ReactPlayer from 'react-player';
 import useCollection from '../../hooks/useCollection';
 import useFirestore from '../../hooks/useFirestore';
@@ -19,6 +20,7 @@ const AbrasiveBlasting = (props) => {
     const [videoEnded, setVideoEnded] = useState(false);
     const [reviewAnswer1, setReviewAnswer1] = useState(null);
     const [reviewAnswer2, setReviewAnswer2] = useState(null);
+    const [show, setShow] = useState(false);
 
     const { documents, error } = useCollection('newcourses/Abrasive Blasting Safety/Sections')
     const { updateDocument } = useFirestore('users');
@@ -52,21 +54,7 @@ const AbrasiveBlasting = (props) => {
        })     
        }
 
-       //console.log(theseCourses)
 
-const getFinalScore = async (e) => {
-e.preventDefault()
-const final = document.getElementById('abrasiveBlastingfinal')
-for(let x = 0; x < final.length; x++){
-    if(final[x].checked && final[x].isCorrect === 'true'){
-       setTotalCorrect(score => score + 1);
-       e.target.disabled=true;
-       setScoreCalculated(true);
-
-    }
-}
-
-}
 
 
 const updateScoreHandler = async (e) => {
@@ -82,14 +70,14 @@ const updateScoreHandler = async (e) => {
                             year: 'numeric',
                             day: 'numeric',
                         };
-                        await updateDocument(user.uid, {courses: arrayRemove({title:"Abrasive Blasting Safety", score:"", date: "", passed:"", isAssigned: true})})
+                        
+                        await updateDocument(user.uid, {courses: arrayRemove({title:"Abrasive Blasting Safety", score:"", date:"", passed:"", isAssigned: true})})
                         await updateDocument(user.uid, {courses: arrayUnion({title:"Abrasive Blasting Safety", score:finalScore, date: date.toLocaleString('en-US', todaysDate), passed:"", isAssigned: true})})
                         console.log(finalScore)
                         e.target.disabled='true';
                     } else {
                         console.log(finalScore)
                         e.target.disabled='true';
-                        //alert("You've already taken this course. Please contact an administrator to request a retake.")
                     }
                     
                 })
@@ -97,6 +85,26 @@ const updateScoreHandler = async (e) => {
         })     
         }
  } 
+
+const openModal = (e) => {
+    e.preventDefault()
+    setShow(true);
+    const final = document.getElementById('abrasiveBlasting')
+for(let x = 0; x < final.length; x++){
+    if(final[x].checked && final[x].isCorrect === 'true'){
+       setTotalCorrect(score => score + 1);
+       e.target.disabled=true;
+       setScoreCalculated(true);
+
+    }
+}
+}
+
+const closeModal = () => {
+    setShow(false);
+}
+
+
 
 console.log(videoEnded)
 return <Fragment>
@@ -144,7 +152,7 @@ return <Fragment>
 
 
 {finalExamOpen && openItem === null &&<>
-<form id="abrasiveBlastingfinal">
+<form id="abrasiveBlasting">
  <br/>   
 <ReactPlayer className='video-one' url={finalVideo} controls></ReactPlayer>
 <br/>
@@ -163,7 +171,8 @@ return <Fragment>
                 />
                 {item}
                 </label>))}
-</>: null} <br/>
+</>: null}
+<br/>
             <div key={section.question2.isCorrect} iscounted='true'><b key={section.question2.isCorrect}>{section.question2.questionText}</b></div>
             {section.question2.answerOptions.map((item)=>(<label key={item} className='answers' htmlFor={item}>
                 <input onChange={(e)=>{if(e.target.id === section.question2.isCorrect){e.target.disabled='true'; e.target.isCorrect='true'} else{e.target.disabled='true'; e.target.isCorrect='false'}}}
@@ -175,8 +184,8 @@ return <Fragment>
                 />
                 {item}
                 </label>))}
-
-            <br/>
+<br/>
+            
             </>
             
 })
@@ -185,11 +194,17 @@ return <Fragment>
 : null}
 <br/>
 
-{!scoreCalculated && <Button onClick={getFinalScore} className='btn-final' >Submit</Button>}
-{scoreCalculated && <Button className='btn-final' onClick={updateScoreHandler}>Save</Button>} 
-</form>
+{!scoreCalculated && <Button onClick={openModal} className='btn-final' >Submit</Button>}
+<Modal show={show} onHide={closeModal} centered>
+<Modal.Body>
 <h2>Your Final Score is: {finalScore}%</h2>
+<p>Would you like to save this score?</p>
+<br/>
+<Button className='btn-final' onClick={updateScoreHandler}>Save Score</Button>
+</Modal.Body>
+</Modal>
 
+</form>
 </>
 }
 </Card>
@@ -201,4 +216,4 @@ return <Fragment>
 </Fragment>
 }
 
-export default AbrasiveBlasting;
+export default AbrasiveBlasting; 

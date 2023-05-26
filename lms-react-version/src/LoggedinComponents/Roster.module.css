@@ -5,11 +5,12 @@
 
 .listItem {
     list-style: none;
-    padding: .5rem;
+    padding: 1rem;
     box-shadow: 1px 1px 4px 1px grey;
     border-radius: 5px;
     font-weight: 600;
     width: 60%;
+    text-align: center;
 }
 
 .topRow {

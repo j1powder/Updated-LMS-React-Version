@@ -4,6 +4,7 @@ import classes from './Certificate.module.css';
 import JsPDF from 'jspdf';
 import useCollection from '../hooks/useCollection';
 import useAuthContext from '../hooks/useAuthContext';
+import Button from 'react-bootstrap/Button'
 
 const Certificate = (props) => {
     const thisCert = useRef();
@@ -15,21 +16,9 @@ const Certificate = (props) => {
 
     
 
-  /*   const input = document.getElementById('report');
-     html2canvas(input).then((canvas)=>{
-        const imgData = canvas.toDataUrl('')
-     }) */
-    // const certificate = new JsPDF('landscape','px','a2');
-    // const width = certificate.internal.pageSize.getWidth();
-    // const height = certificate.internal.pageSize.getHeight();
-    //const width = window.innerWidth;
-   // const height = window.innerHeight;
+
    const mainEl = document.getElementById('report')  
-    // console.log(window.innerHeight)
-     //const certSize = document.getElementById('thisCert');
 
-
- 
     const generatePDF = () => {
 
         const certificate = new JsPDF('landscape','px',[thisCert.current.clientWidth * 1.05, thisCert.current.clientHeight * 1.05]);
@@ -39,30 +28,14 @@ const Certificate = (props) => {
         });
     }
 
-//useEffect(()=>{
-//console.log(thisCert.current.clientWidth)
-//},[])
 
-
-    const setWidthandHeight = (e) => {
+/*     const setWidthandHeight = (e) => {
         setWidth(thisCert.current.clientWidth);
         setHeight(thisCert.current.clientHeight);
         console.log(width, height)
-    }
+    } */
 
-//console.log(width, height)
 
-/*     if(documents){
-        console.log(documents.map((thisUser)=>{
-            if(user.uid === thisUser.id) {
-               return thisUser.firstName + " " + thisUser.lastName
-            }
-              
-           }))
-    }
-    */
-
-    //console.log(new Date())
 
     const date = new Date();
     const todaysDate = {
@@ -71,7 +44,7 @@ const Certificate = (props) => {
         day: 'numeric',
     };
 
-    //console.log(date.toLocaleString('en-US', todaysDate)) 
+  
     return <>
     {documents && documents.map((thisUser)=>{
                    if(user.uid === thisUser.id) {
@@ -93,8 +66,8 @@ const Certificate = (props) => {
                                     </div>
                     </main>
                     </div>
-                    <button onClick={generatePDF}>Generate Certificate</button>
-                    <button onClick={setWidthandHeight}>check size</button>
+                    <Button className={classes.genPDF} variant='secondary' onClick={generatePDF}>Generate Certificate</Button>
+                    
                 </>
                  } 
     })
