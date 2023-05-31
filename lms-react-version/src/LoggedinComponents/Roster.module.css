@@ -16,3 +16,53 @@
 .topRow {
     color: #1189dd;
 }
+
+.border {
+    border: solid 1px black;
+    padding: 1rem;
+}
+
+.fullTable {
+    width: 100%;
+    text-align: center;
+ 
+    
+}
+.tableHead {
+    border: solid 1px black;
+    padding: .5rem;
+    width: 33%;
+
+ 
+}
+.tableData {
+    border: solid 1px black;
+    padding: .5rem;
+    width: 33%;
+}
+
+.idealMargin {
+margin-top: 2rem;
+margin-bottom: 2rem;
+}
+
+.title {
+    text-align: center;
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.body {
+    min-height: 500px
+}
+
+.tableRow{
+color: #1189dd;
+background-color: whitesmoke;
+cursor:pointer;
+}
+
+
+

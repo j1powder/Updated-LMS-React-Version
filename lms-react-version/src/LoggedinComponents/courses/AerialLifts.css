@@ -2,6 +2,8 @@
 
 .video-one{
 max-width: 100%;
+display: block;
+margin: 0rem auto;
 }
 .coursecard {
     background-color: white;
@@ -52,4 +54,9 @@ display: block;
     background-color: lightgray !important;
     border: 2px solid black !important;
     color: black !important;
+}
+
+.centered {
+    display: block;
+    margin: 0rem auto;
 }

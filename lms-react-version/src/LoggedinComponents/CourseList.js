@@ -9,6 +9,9 @@ import {arrayUnion} from 'firebase/firestore'
 import 'firebase/compat/firestore'
 import classes from './CourseList.module.css';
 import { projectFirestore } from "../config";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 
 const CourseList = () => {
@@ -75,6 +78,8 @@ const updateCourseHandler = async (e) => {
         await updateDocument(userToAssign, {courses:arrayUnion({title:courseSelected, score:"",date: "", passed:"", isAssigned:true})});
         console.log(employeeSelected, courseSelected)
         alert(`Success! You just assigned ${courseSelected} to ${employeeSelected}`)
+        setCourseSelected(null);
+        setEmployeeSelected(null);
     }
     
      } 
@@ -96,7 +101,51 @@ console.log(courseSelected, employeeSelected)
 
 
 return <Fragment>
-    <Panel header="Select Course">
+
+<Container className={classes.containers}>
+<Row>
+<Col md={6} className={classes.sections}>
+<Panel header="Select Course">
+{documents && <>
+{documents.map((courses)=>{
+    return <>
+        
+        <Card key={courses.id} style={courseSelected === courses.id ? {backgroundColor:"Gray"} : {backgroundColor:"White"}} className={classes.courseassign} title={courses.id} onClick={selectCourseHandler} onMouseEnter={(e)=>{ console.log('hello')}}></Card>
+    </>
+})
+
+}
+</>}
+</Panel>
+
+</Col>
+<Col md={6} className={classes.sections}>
+<Panel header="Select Employee">
+{usersCollection && <>
+{usersCollection.map((selectUser)=>{
+if(selectUser.company === thisCompany){
+  return  <Card className={classes.courseassign} style={employeeSelected === selectUser.firstName + " " + selectUser.lastName ? {backgroundColor:"Gray"} : {backgroundColor:"White"}} title={selectUser.firstName + " " + selectUser.lastName} onClick={selectEmployeeHandler}></Card>  
+}
+
+
+})}
+
+
+</>}
+</Panel>
+</Col>
+</Row>
+<Row>
+
+    <Col md={12}>
+    <Button className={classes.asgnBtn} onClick={updateCourseHandler}>Assign Course</Button>
+    </Col>
+</Row>
+</Container>
+
+
+
+{/* <Panel header="Select Course">
 {documents && <>
 {documents.map((courses)=>{
     return <>
@@ -114,17 +163,13 @@ return <Fragment>
 if(selectUser.company === thisCompany){
   return  <Card className={classes.courseassign} style={employeeSelected === selectUser.firstName + " " + selectUser.lastName ? {backgroundColor:"Gray"} : {backgroundColor:"White"}} title={selectUser.firstName + " " + selectUser.lastName} onClick={selectEmployeeHandler}></Card>  
 }
-/* return <>
-<Card className={classes.courseassign} style={employeeSelected === selectUser.firstName + " " + selectUser.lastName ? {backgroundColor:"Gray"} : {backgroundColor:"White"}} title={selectUser.firstName + " " + selectUser.lastName} onClick={selectEmployeeHandler}></Card>
-
-</> */
 
 })}
 <br/>
 <Button onClick={updateCourseHandler}>Assign Course</Button>
 </>}
 </Panel>
-
+ */}
 </Fragment>
 }
 

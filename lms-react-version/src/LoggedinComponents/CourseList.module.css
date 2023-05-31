@@ -15,3 +15,30 @@
     display: block
 
 }
+
+.containers {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.sections {
+    margin-top: 1rem;
+}
+
+.asgnBtn {
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 60%;
+    background-color: #1189dd;
+    border: none;
+}
+.asgnBtn:hover {
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 60%;
+    background-color: lightblue !important;
+    border: none;
+}

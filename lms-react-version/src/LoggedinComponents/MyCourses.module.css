@@ -41,3 +41,11 @@
     font-size:x-large;
 }
 
+.colMargin {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.contMargin {
+    padding-top: 2rem;
+}

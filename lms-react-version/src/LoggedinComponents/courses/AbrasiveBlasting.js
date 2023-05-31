@@ -21,6 +21,7 @@ const AbrasiveBlasting = (props) => {
     const [reviewAnswer1, setReviewAnswer1] = useState(null);
     const [reviewAnswer2, setReviewAnswer2] = useState(null);
     const [show, setShow] = useState(false);
+    const [showAlso, setShowAlso] = useState(false);
 
     const { documents, error } = useCollection('newcourses/Abrasive Blasting Safety/Sections')
     const { updateDocument } = useFirestore('users');
@@ -89,7 +90,7 @@ const updateScoreHandler = async (e) => {
 const openModal = (e) => {
     e.preventDefault()
     setShow(true);
-    const final = document.getElementById('abrasiveBlasting')
+    const final = document.getElementById('abrasiveblasting')
 for(let x = 0; x < final.length; x++){
     if(final[x].checked && final[x].isCorrect === 'true'){
        setTotalCorrect(score => score + 1);
@@ -104,7 +105,9 @@ const closeModal = () => {
     setShow(false);
 }
 
-
+const closeSectionModal = () => {
+    setShowAlso(false)
+}
 
 console.log(videoEnded)
 return <Fragment>
@@ -115,11 +118,15 @@ return <Fragment>
     return <>
     
     <Card key={section.id} className='coursecard' >
-    <div className='courseTitle' onClick={()=> {setOpenItem(section.id); setFinalExamOpen(false)}}>{section.title}</div>
+    <div className='courseTitle' onClick={()=> {setShowAlso(true); setOpenItem(section.id); setFinalExamOpen(false)}}>{section.title}</div>
     <br/>
     <br/>
 {openItem === section.id ? <>
+<Modal show={showAlso} size='lg' onHide={closeSectionModal}>
+    <Modal.Body>
+        <br/>
             <ReactPlayer onReady={()=>{setVideoEnded(false); setReviewAnswer1(null); setReviewAnswer2(null)}} onEnded={()=>{setVideoEnded(true)}} className='video-one' url={section.video}  controls></ReactPlayer>
+             <br/>
              <form>
               <p><b>{section.question1.questionText}</b></p>
               {section.question1.answerOptions.map((item)=>(<label style={videoEnded ? {fontWeight: "bold"}: null} className='answers'><input onChange={(e)=>{setReviewAnswer1(e.target.id)}} id={item} disabled={videoEnded ? false : true} className='answerinput' type='radio' name='selection1' />{item}</label>))}
@@ -137,6 +144,8 @@ return <Fragment>
               <br/>
               </form>
               <Button style={{backgroundColor:'gray', border: 'black'}} onClick={()=>{setOpenItem(null);} }>Close</Button>
+              </Modal.Body>
+    </Modal>
 
               </> : null
               }
@@ -147,12 +156,17 @@ return <Fragment>
         </>
 })}
 <Card className='coursecard' >
-<div className='courseTitle' onClick={()=> {if(openItem == null) {setFinalExamOpen(true)}}}>Final Knowledge Check</div>
+<div className='courseTitle' onClick={()=> {if(openItem == null) {setShowAlso(true); setFinalExamOpen(true)}}}>Final Knowledge Check</div>
 
 
 
 {finalExamOpen && openItem === null &&<>
-<form id="abrasiveBlasting">
+<Modal show={showAlso} size='lg' onHide={closeSectionModal} fullscreen>
+<Modal.Header closeButton>
+          <Modal.Title>Final Exam</Modal.Title>
+        </Modal.Header>
+    <Modal.Body>
+<form id="abrasiveblasting">
  <br/>   
 <ReactPlayer className='video-one' url={finalVideo} controls></ReactPlayer>
 <br/>
@@ -195,8 +209,8 @@ return <Fragment>
 <br/>
 
 {!scoreCalculated && <Button onClick={openModal} className='btn-final' >Submit</Button>}
-<Modal show={show} onHide={closeModal} centered>
-<Modal.Body>
+<Modal  show={show} onHide={closeModal} centered>
+<Modal.Body style={{backgroundColor:'whitesmoke'}}>
 <h2>Your Final Score is: {finalScore}%</h2>
 <p>Would you like to save this score?</p>
 <br/>
@@ -205,6 +219,8 @@ return <Fragment>
 </Modal>
 
 </form>
+</Modal.Body>
+</Modal>
 </>
 }
 </Card>
