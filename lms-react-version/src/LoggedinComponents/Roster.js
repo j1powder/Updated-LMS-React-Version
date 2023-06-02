@@ -15,6 +15,9 @@ const { documents, error } = useCollection('users');
 const [isOpen, setIsOpen] = useState(false);
 const [show, setShow] = useState(false);
 const [showAlso, setShowAlso] = useState(false);
+const [courseTitle, setCourseTitle] = useState();
+const [courseDate, setCourseDate] = useState();
+const [courseScore, setCourseScore] = useState();
 
 let thisCompany;
 if(documents && user){
@@ -24,7 +27,7 @@ if(documents && user){
         }
     })
 }
-console.log(thisCompany)
+//console.log(thisCompany)
 
 const openModal = () => {
     setShow(true);
@@ -60,7 +63,7 @@ const closeCertModal = () =>{
                                 </thead>
                                 <tbody>
                                 {users.courses.map((course)=>{
-                            return <><tr key={course.score} className={classes.tableRow} onClick={()=>{setShowAlso(true); console.log(course.title)}}>
+                            return <><tr key={course.score} className={classes.tableRow} onClick={()=>{setShowAlso(true); setCourseDate(course.date); setCourseScore(course.score); setCourseTitle(course.title)}}>
                                 
                                     <td className={classes.tableData} md={4}><div>{course.title}</div></td>
                                     <td className={classes.tableData} md={4}><div>{course.score}</div></td>
@@ -71,10 +74,12 @@ const closeCertModal = () =>{
                                 <Modal.Header closeButton><Modal.Title>Certificate</Modal.Title></Modal.Header>
                                 
                                 <Modal.Body>
-                                    <CertificateForSC employee={users.firstName + " " + users.lastName} date={course.date} title={course.title} score={course.score} />
+                                    
+                                {courseScore > 79 ? <CertificateForSC employee={users.firstName + " " + users.lastName} title={courseTitle} date={courseDate} score={courseScore} /> : <h3>Sorry, 80% is needed to generate a certificate of completion.</h3>
+                                }
                                 </Modal.Body> 
                                 
-                            </Modal>
+                            </Modal> 
                             
                             </>
                         })}

@@ -6,7 +6,7 @@ const Footer = () => {
         <p>My Company LLC</p>
         <p>Phone: 555-555-5555</p>
         <p>Email: sales@myemail.com</p>
-        <p id="copyright">&copy;2023  JJ SafetyLLC </p>
+        <p id="copyright">&copy;2023  My Company LLC </p>
         </footer>
 }
 

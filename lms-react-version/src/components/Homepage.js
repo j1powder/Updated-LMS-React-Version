@@ -70,7 +70,7 @@ const updateProfile = async (e) => {
             <Row>
               <Col className='thisCol' md={5}>
                 <p>Welcome to the future of online training. Transformative learning solutions created to get you certified FAST.</p>
-              <img className='sectionPic' src={whiteLogo} alt='jj safety' />
+              <img className='sectionPic' src={bbp} alt='jj safety' />
               </Col>
               <Col className='thisCol' md={5}><p>Try it free for 7 days. Start getting compliant today. No commitment. Cancel anytime.</p>
               <img className='sectionPic' src={bbp} alt='jj safety' />

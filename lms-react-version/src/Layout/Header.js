@@ -118,7 +118,7 @@ console.log(email)
     <Navbar bg='light' variant='light' expand='sm'>
         <Container>
             <Navbar.Brand className={classes.color}>
-                JJ LMS
+                LMS
             </Navbar.Brand>
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav'>

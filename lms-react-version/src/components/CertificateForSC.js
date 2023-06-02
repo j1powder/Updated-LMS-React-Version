@@ -44,6 +44,7 @@ const CertificateForSC = (props) => {
         day: 'numeric',
     };
 
+    console.log(props.date)
   
     return <>
     {documents && documents.map((thisUser)=>{
