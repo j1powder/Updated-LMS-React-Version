@@ -14,6 +14,7 @@ import AerialLifts from './courses/AerialLifts';
 import ArcFlash from './courses/ArcFlash';
 import AbrasiveBlasting from './courses/AbrasiveBlasting';
 import Ammonia from './courses/AnhydrousAmmonia';
+import AsbestosAwareness from './courses/AsbestosAwareness';
 //theme
 import "primereact/resources/themes/soho-light/theme.css";     
     

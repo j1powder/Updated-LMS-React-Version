@@ -13,7 +13,9 @@ import AerialLifts from './courses/AerialLifts';
 import ArcFlash from './courses/ArcFlash';
 import AbrasiveBlasting from './courses/AbrasiveBlasting';
 import Ammonia from './courses/AnhydrousAmmonia';
+import AsbestosAwareness from './courses/AsbestosAwareness';
 import Certificate from '../components/Certificate';
+import AllCourses from './courses/AllCourses';
 import { projectStorage } from '../config';
 
 
@@ -44,6 +46,16 @@ const testData = (e) => {
     setShow(true);
 }
 
+if(documents && user) {
+    documents.map((newUser)=>{
+        if(newUser.id === user.uid){
+            newUser.courses.map((course)=>{
+                return console.log(course.title)
+            })
+        }
+    })
+
+}
 
 
     return <Fragment>
@@ -60,10 +72,12 @@ const testData = (e) => {
                 <div className={classes.panel} onClick={()=>setCourseOpen(course.title)} >{course.title}</div>
                         
                 {courseOpen === course.title && <>
-                 {course.title === "Aerial Lifts" ? <AerialLifts />: null}   
+                    <AllCourses courseTitle={course.title}/>
+{/*                  {course.title === "Aerial Lifts" ? <AerialLifts />: null}   
                  {course.title === "Abrasive Blasting Safety" ? <AbrasiveBlasting/>: null}
                  {course.title === "Arc Flash Safety" ? <ArcFlash/> : null}
                  {course.title === "Anhydrous Ammonia" ? <Ammonia /> : null}
+                 {course.title === "Asbestos Awareness Basic" ? <AsbestosAwareness /> : null} */}
                  
             <Button style={{backgroundColor:'gray', border: 'black'}} onClick={()=> setCourseOpen(null)}>Back to Courses</Button>
                  
