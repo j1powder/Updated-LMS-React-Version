@@ -9,7 +9,8 @@ import useAuthContext from '../../hooks/useAuthContext';
 import { arrayUnion, arrayRemove } from 'firebase/firestore';
 import './AerialLifts.css';
 import { projectFirestore } from '../../config';
-       
+
+
 const AllCourses = (props) => {
 
     const [openItem, setOpenItem] = useState(null);
@@ -29,7 +30,7 @@ const AllCourses = (props) => {
     const { user } = useAuthContext();
     const subBtnRef = useRef();
     const finalVideo = "https://player.vimeo.com/video/455943382?h=2d45027c8e&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-    const finalScore = Math.round(totalCorrect/12 * 100)
+    const finalScore = Math.round(totalCorrect/totalQuestions * 100)
 
 
     useEffect(()=>{
@@ -88,10 +89,22 @@ const updateScoreHandler = async (e) => {
         }
  } 
 
+ let myquestions = [];
 const openModal = (e) => {
     e.preventDefault()
     setShow(true);
-    const final = document.getElementById('courseFinal')
+    
+    if(documents){
+        const questions = document.querySelectorAll('b');
+        Object.values(questions).map((question)=>{
+                if(question.innerText !== ""){
+                    myquestions.push(question.innerText)
+                    setTotalQuestions(myquestions.length);
+                }
+        })
+    }
+
+const final = document.getElementById('courseFinal')
 for(let x = 0; x < final.length; x++){
     if(final[x].checked && final[x].isCorrect === 'true'){
        setTotalCorrect(score => score + 1);
@@ -102,22 +115,9 @@ for(let x = 0; x < final.length; x++){
 }
 }
 
-useEffect(()=>{
-    if(documents){
-        const questions = document.querySelectorAll('b');
-    console.log(questions)
-     for(let i=0; i < questions.length; i++){
-        if(questions[i].innerText !== ""){
-           console.log()
-           
-        }
-        
-     }
-    }
-    
-   
 
-},[totalQuestions, documents])
+
+console.log(totalQuestions)
 
 
 
@@ -132,8 +132,11 @@ const closeModal = () => {
 const closeSectionModal = () => {
     setShowAlso(false)
 }
-console.log(props.courseTitle)
-console.log(videoEnded)
+
+
+
+//console.log(props.courseTitle)
+//console.log(videoEnded)
 return <Fragment>
 <p >Hello There</p>
 {documents && 
