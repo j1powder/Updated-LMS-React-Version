@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import classes from './Roster.module.css';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card'
 import CertificateForSC from '../components/CertificateForSC';
 
 const Roster = () => {
@@ -50,9 +51,20 @@ const closeCertModal = () =>{
                 {documents &&  documents.map((users)=>{
                     if(users.company === thisCompany){
                         return <> 
-                        <table className={classes.fullTable}>
+                        <Container>
+                            <Card className={classes.cardstyles}>
+                                <Card.Body>
+                            <Row onClick={()=>{setShow(true); setIsOpen(users.id)}} >
+                            <Col sm={2} key={users.id} >Employee: </Col>
+                            <Col sm={10}>{users.firstName + " " + users.lastName}</Col>
+                            </Row>
+                            </Card.Body>
+                            </Card>
+                        </Container>
+
+                      {/*   <table className={classes.fullTable}>
                            <thead><tr key={users.id} onClick={()=>{setShow(true); setIsOpen(users.id)}} className={classes.tableRow}><th className={classes.tableHead}>Employee: </th><td className={classes.tableData}>{users.firstName + " " + users.lastName}</td></tr></thead> 
-                        </table>
+                        </table> */}
                         {isOpen === users.id &&
                         <Modal show={show} size='lg' onHide={closeModal}>
                             <Modal.Body>

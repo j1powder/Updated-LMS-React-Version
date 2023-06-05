@@ -2,15 +2,16 @@
 
 .courseassign {
     margin: .5rem;
+    color: #1189dd !important;
 }
 .courseassign:hover {
     margin: .5rem;
-    background-color: whitesmoke;
     cursor: pointer;
+    color: #1189dd !important;
+    border: 1px solid #1189dd !important;
 }
 .courseassign:active {
     margin: .5rem auto;
-    background-color: whitesmoke;
     width: 95%;
     display: block
 

@@ -1,16 +1,20 @@
 
 .margin {
-    margin: 2rem;
+    margin: .4rem;
+    
 }
 
 .cbuilderlabel {
     display: block;
 }
 
-.cbuilderinput {
-    
-}
+
 
 .entireform {
     margin: 2rem;
+}
+
+.answers {
+    text-decoration: underline;
+    margin-top: 1rem;
 }

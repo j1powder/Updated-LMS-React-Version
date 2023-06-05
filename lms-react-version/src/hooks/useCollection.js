@@ -39,4 +39,4 @@ const useCollection = (collection, _query) => {
     return { documents, error }
     }
     
-    export default useCollection;
+    export default useCollection;  

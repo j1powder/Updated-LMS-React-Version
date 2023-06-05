@@ -64,5 +64,17 @@ background-color: whitesmoke;
 cursor:pointer;
 }
 
+.cardstyles {
+    margin: .2rem;
+    color: #1189dd !important;
+}
+
+.cardstyles:hover {
+    margin: .2rem;
+    cursor:pointer;
+    border: 1px #1189dd solid !important;
+
+}
+
 
 

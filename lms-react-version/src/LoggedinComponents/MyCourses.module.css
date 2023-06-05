@@ -1,7 +1,10 @@
 
-
 .cardcomp {
     margin: 1rem;
+}
+.cardcomp:hover {
+    margin: 1rem;
+    border: 1px solid #1189dd !important;
 }
 
 .table{
@@ -25,27 +28,29 @@
 }
 
 .column {
-    font-weight: bold !important;
-    font-size: 110%;
-    color: #121212;
-    padding: 1rem;
+    font-size: Large;
+    color: #1189dd;
+    padding: .2rem;
     text-align: left;
 }
 .row {
-    box-shadow: 1px 1px 4px 1px black;
+    border: 1px #d3d3d3 solid;
     border-radius: 10px;
 }
 
 .panel {
-    color:#121212 !important;
-    font-size:x-large;
+    color: #1189dd !important;
+    font-size:large;
+    cursor: pointer;
 }
 
 .colMargin {
     margin-top: 1rem;
     margin-bottom: 1rem;
+    padding: .4rem;
 }
 
 .contMargin {
     padding-top: 2rem;
 }
+

@@ -3,7 +3,7 @@ import useCollection from "../hooks/useCollection";
 import useFirestore from "../hooks/useFirestore";
 import useAuthContext from "../hooks/useAuthContext";
 import { Panel } from 'primereact/panel';
-import { Card } from 'primereact/card';
+import Card  from 'react-bootstrap/Card';
 import {Button} from 'primereact/button'
 import {arrayUnion} from 'firebase/firestore'
 import 'firebase/compat/firestore'
@@ -110,7 +110,9 @@ return <Fragment>
 {documents.map((courses)=>{
     return <>
         
-        <Card key={courses.id} style={courseSelected === courses.id ? {backgroundColor:"Gray"} : {backgroundColor:"White"}} className={classes.courseassign} title={courses.id} onClick={selectCourseHandler} onMouseEnter={(e)=>{ console.log('hello')}}></Card>
+        <Card key={courses.id} style={courseSelected === courses.id ? {backgroundColor:"whitesmoke"} : {backgroundColor:"White"}} className={classes.courseassign} title={courses.id} onClick={selectCourseHandler} onMouseEnter={(e)=>{ console.log('hello')}}>
+            <Card.Body>{courses.id}</Card.Body>
+        </Card>
     </>
 })
 
@@ -124,7 +126,9 @@ return <Fragment>
 {usersCollection && <>
 {usersCollection.map((selectUser)=>{
 if(selectUser.company === thisCompany){
-  return  <Card className={classes.courseassign} style={employeeSelected === selectUser.firstName + " " + selectUser.lastName ? {backgroundColor:"Gray"} : {backgroundColor:"White"}} title={selectUser.firstName + " " + selectUser.lastName} onClick={selectEmployeeHandler}></Card>  
+  return  <Card className={classes.courseassign} style={employeeSelected === selectUser.firstName + " " + selectUser.lastName ? {backgroundColor:"whitesmoke"} : {backgroundColor:"White"}} title={selectUser.firstName + " " + selectUser.lastName} onClick={selectEmployeeHandler}>
+            <Card.Body>{selectUser.firstName + " " + selectUser.lastName}</Card.Body>
+  </Card>  
 }
 
 
