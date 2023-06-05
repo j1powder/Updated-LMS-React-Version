@@ -131,6 +131,7 @@ console.log(email)
                    return <>
                    <Nav.Link href='/Courselist' className={classes.color}>Assign Courses</Nav.Link>
                    <Nav.Link href='/roster' className={classes.color}>My Employees</Nav.Link>
+                   <Nav.Link href='/Coursebuilder' className={classes.color}>Course Builder</Nav.Link>
                    </>
                 }
             })}

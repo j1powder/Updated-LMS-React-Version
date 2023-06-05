@@ -9,17 +9,9 @@ import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal'
 import useCollection from '../hooks/useCollection';
 import useAuthContext from '../hooks/useAuthContext';
-import AerialLifts from './courses/AerialLifts';
-import ArcFlash from './courses/ArcFlash';
-import AbrasiveBlasting from './courses/AbrasiveBlasting';
-import Ammonia from './courses/AnhydrousAmmonia';
-import AsbestosAwareness from './courses/AsbestosAwareness';
 import Certificate from '../components/Certificate';
 import AllCourses from './courses/AllCourses';
 import { projectStorage } from '../config';
-
-
-
 
 
 const MyCourses = (props) => {
@@ -29,12 +21,6 @@ const [show, setShow] = useState();
 const [courseTitle, setCourseTitle] = useState();
 const [courseDate, setCourseDate] = useState();
 const { user } = useAuthContext();
-
-
-//const uploadPath = `certificates/${user.uid}/report.pdf`;
-//const certFile = await projectStorage.ref(uploadPath)
-
-
 const openModal = () => setShow(true);
 const closeModal = () => setShow(false);
 
@@ -73,12 +59,6 @@ if(documents && user) {
                         
                 {courseOpen === course.title && <>
                     <AllCourses courseTitle={course.title}/>
-{/*                  {course.title === "Aerial Lifts" ? <AerialLifts />: null}   
-                 {course.title === "Abrasive Blasting Safety" ? <AbrasiveBlasting/>: null}
-                 {course.title === "Arc Flash Safety" ? <ArcFlash/> : null}
-                 {course.title === "Anhydrous Ammonia" ? <Ammonia /> : null}
-                 {course.title === "Asbestos Awareness Basic" ? <AsbestosAwareness /> : null} */}
-                 
             <Button style={{backgroundColor:'gray', border: 'black'}} onClick={()=> setCourseOpen(null)}>Back to Courses</Button>
                  
 
@@ -103,17 +83,7 @@ if(documents && user) {
         {documents && documents.map((currentuser)=>{
             return <> 
             {currentuser.id === user.uid ? <>
-{/*                 <Container>
-                    <Row>
-                        <Col md={4}><h3>Course</h3></Col>
-                        <Col md={4}><h3>Score</h3></Col>
-                        <Col md={4}></Col>
-                    </Row>
-                </Container> */}
-       
-      {/*           <table className={classes.table}>
-                <thead><tr><th>Course</th><th>Score %</th></tr></thead>    
-                </table> */}
+
             {currentuser.courses.map((course)=>{
                 return <>
                          <Container>
@@ -132,9 +102,7 @@ if(documents && user) {
                   <Certificate title={courseTitle} date={courseDate} />  
         </Modal.Body>
                 </Modal>
-              {/*   <table className={classes.table}>
-                <tbody><tr><td>{course.title}</td><td>{course.score}</td><td>View Certificate</td></tr></tbody>    
-                </table> */}
+
                  </>
             })}
              </>: null}

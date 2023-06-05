@@ -9,6 +9,7 @@ import Register from './components/Register';
 import MyCourses from './LoggedinComponents/MyCourses';
 import CourseList from './LoggedinComponents/CourseList';
 import Roster from './LoggedinComponents/Roster';
+import CourseBuilder from './coursebuilder/CourseBuilder';
 import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 import useAuthContext from './hooks/useAuthContext';
 import useCollection from './hooks/useCollection';
@@ -76,6 +77,8 @@ console.log(permissionLevel);
     <Route path='/CourseList' element={user && permissionLevel === 'admin' ? <CourseList className='appwidth'/> : <Navigate to='/' />} />
     <Route path='/MyCourses' element={user ? <MyCourses className='appwidth'/> : <Navigate to='/'/> } />
     <Route path='/Roster' element={user && permissionLevel === 'admin' ? <Roster className='appwidth' /> : <Navigate to='/'/>} />
+    <Route path='/Coursebuilder' element={user && permissionLevel === 'admin' ? <CourseBuilder className='appwidth' /> : <Navigate to='/'/>} />
+
     </Routes>
     </BrowserRouter>
   <Footer/>
