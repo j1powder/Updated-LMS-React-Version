@@ -42,6 +42,7 @@ const createNewCourseWithId = async () => {
 
         await newDocRef.set({courseTitle: courseName.current.value});
         console.log('course created successfully');
+        alert(`${courseName.current.value} has been created successfully`)
     } catch (error) {
         console.error('Error creating document', error);
 
@@ -91,6 +92,7 @@ answer8.current.value = "";
 
 addToCounter();
 console.log('section added successfully', subDocRef.id);
+alert(`section was successfully added to ${courseName.current.value}`)
 } catch(error) {
     console.error('Error creating subcollection document:', error);
 

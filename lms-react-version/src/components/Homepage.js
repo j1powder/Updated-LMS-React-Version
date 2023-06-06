@@ -1,16 +1,17 @@
 import { Fragment, useState, useRef } from 'react';
 import Banner from './AdobeStock_391430854.jpeg';
-import './Homepage.css';
+import classes from './Homepage.module.css';
 import useCollection from '../hooks/useCollection';
 import useAuthContext from '../hooks/useAuthContext';
 import '../LoggedinComponents/Dashboard.css';
 import { Panel } from 'primereact/panel';
-import { Card } from 'primereact/card';
-import { Button } from 'primereact/button';
+import Card from 'react-bootstrap/Card';
+import  Button  from 'react-bootstrap/Button';
 import useFirestore from '../hooks/useFirestore';
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form'
 import Accordion from 'react-bootstrap/Accordion';
 import whiteLogo from '../assets/cropped-JJ-safety-logo3-1-1whiteversion.png';
 import bbp from '../assets/bloodbornepathogens2.png';
@@ -49,7 +50,7 @@ const updateProfile = async (e) => {
 
     return <Fragment>
         {!user ? <>
-         <section id="bannertextsection" style={{backgroundImage: `url(${Banner})`, 
+         <section className={classes.bannertextsection} style={{backgroundImage: `url(${Banner})`, 
                                                  backgroundSize: 'cover',
                                                  backgroundPosition: 'center'}}>
             <h1>Online Learning Managment System</h1>
@@ -62,18 +63,18 @@ const updateProfile = async (e) => {
               </Col>
             </Row>
             <Row>
-              <Col className='thisCol' md={5}>
+              <Col className={classes.thisCol} md={5}>
                 <p>Introducing Fall Protection, our latest training module created to keep your workers safe from fall hazards.</p>
               </Col>
-              <Col className='thisCol' md={5}><p>OSHA compliance has never been simpler with our Introduction to OSHA training. Get certified today!</p></Col>
+              <Col className={classes.thisCol} md={5}><p>OSHA compliance has never been simpler with our Introduction to OSHA training. Get certified today!</p></Col>
             </Row>
             <Row>
-              <Col className='thisCol' md={5}>
+              <Col className={classes.thisCol} md={5}>
                 <p>Welcome to the future of online training. Transformative learning solutions created to get you certified FAST.</p>
-              <img className='sectionPic' src={bbp} alt='jj safety' />
+              <img className={classes.sectionPic} src={bbp} alt='jj safety' />
               </Col>
-              <Col className='thisCol' md={5}><p>Try it free for 7 days. Start getting compliant today. No commitment. Cancel anytime.</p>
-              <img className='sectionPic' src={bbp} alt='jj safety' />
+              <Col className={classes.thisCol} md={5}><p>Try it free for 7 days. Start getting compliant today. No commitment. Cancel anytime.</p>
+              <img className={classes.sectionPic} src={bbp} alt='jj safety' />
               </Col>
               
             </Row>
@@ -84,13 +85,13 @@ const updateProfile = async (e) => {
               <Accordion.Item eventKey='0'>
               <Accordion.Header>What is the LMS?</Accordion.Header>
               <Accordion.Body>
-              The LMS is an online learning management system for training employees to follow OSHA safety standards and to avoid penalties and fines during site visits. Access your online training anytime, anyplace and get instant grading and online certificates. The JJ LMS interactive multimedia courses will keep your employees engaged and informed. The JJ LMS course catalog includes both construction and general industry.
+              The LMS is an online learning management system for training employees to follow OSHA safety standards and to avoid penalties and fines during site visits. Access your online training anytime, anyplace and get instant grading and online certificates. The LMS interactive multimedia courses will keep your employees engaged and informed. The LMS course catalog includes both construction and general industry.
               </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey='1'>
               <Accordion.Header>What are the Benefits?</Accordion.Header>
               <Accordion.Body>
-              JJ LMS provides an affordable, customizable learning management system that your employees can access around the clock from any desktop PC, tablet, or smartphone. Get in-depth course completion reporting, instant grading, and online certificates. Our dedicated support team is here to help with any issues.              
+              The LMS provides an affordable, customizable learning management system that your employees can access around the clock from any desktop PC, tablet, or smartphone. Get in-depth course completion reporting, instant grading, and online certificates. Our dedicated support team is here to help with any issues.              
               </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey='2'>
@@ -108,12 +109,13 @@ const updateProfile = async (e) => {
         </section>
         </>
 : <>
-<Panel header={"Welcome " + user.displayName} >
+<Panel className={classes.profilecard} header={"Welcome " + user.displayName} >
 
-<h1>Welcome {user.displayName}</h1>
+<h1 style={{color: '#1189dd'}}>Welcome {user.displayName}</h1>
 </Panel>
-<Panel header="Profile Page">
-<Card className='profile-card'>
+<Panel header="Profile Page" className={classes.profilecard}>
+<Card className={classes.profilecard}>
+  <Card.Body>
   <h2>My Profile</h2>
   <br/>
 
@@ -129,22 +131,26 @@ const updateProfile = async (e) => {
     
     </>:null} </>
 })}
-
+</Card.Body>
 </Card>
 
 
-<Card className='profile-card' title="Update Profile" >
- <Button className='profile-btn' onClick={showEditProfileHandler}>Open/Close</Button>
+<Card className={classes.profilecard} title="Update Profile" >
+  <Card.Body>
+ <Button className={classes.profilebtn} onClick={showEditProfileHandler}>Open/Close</Button>
  {openEditProfile && 
  <div>
-<form onSubmit={updateProfile} id='profileform'>
-<label>First Name: <input ref={firstName} type='text' /> </label>
-<label>Last Name: <input ref={lastName} type='text' /> </label>
-<label>Address: <input ref={address} type='text' /> </label>
-<label>Company: <input ref={company} type='text' /> </label>
-<Button className='profile-btn'>Update</Button>
-</form>
+<Form onSubmit={updateProfile} className={classes.profileform} >
+  <Form.Group>
+<Form.Label>First Name: <Form.Control ref={firstName} type='text' /> </Form.Label>
+<Form.Label>Last Name: <Form.Control ref={lastName} type='text' /> </Form.Label>
+<Form.Label>Address: <Form.Control ref={address} type='text' /> </Form.Label>
+<Form.Label>Company: <Form.Control ref={company} type='text' /> </Form.Label>
+<Button type="submit"className={classes.profilebtn}>Update</Button>
+</Form.Group>
+</Form>
 </div>}
+</Card.Body>
 </Card>
 </Panel> 
 

@@ -74,10 +74,10 @@ console.log(permissionLevel);
     <Routes>
     <Route path='/' element={<HomePage className='appwidth' />} />
     <Route path='/Register' element={!user ? <Register className='appwidth' /> : <Navigate to='/' />} />
-    <Route path='/CourseList' element={user && permissionLevel === 'admin' ? <CourseList className='appwidth'/> : <Navigate to='/' />} />
+    <Route path='/CourseList' element={(user && permissionLevel === 'admin') || (user && permissionLevel === 'superAdmin')  ? <CourseList className='appwidth'/> : <Navigate to='/' />} />
     <Route path='/MyCourses' element={user ? <MyCourses className='appwidth'/> : <Navigate to='/'/> } />
-    <Route path='/Roster' element={user && permissionLevel === 'admin' ? <Roster className='appwidth' /> : <Navigate to='/'/>} />
-    <Route path='/Coursebuilder' element={user && permissionLevel === 'admin' ? <CourseBuilder className='appwidth' /> : <Navigate to='/'/>} />
+    <Route path='/Roster' element={(user && permissionLevel === 'admin') || (user && permissionLevel === 'superAdmin') ? <Roster className='appwidth' /> : <Navigate to='/'/>} />
+    <Route path='/Coursebuilder' element={user && permissionLevel === 'superAdmin' ? <CourseBuilder className='appwidth' /> : <Navigate to='/'/>} />
 
     </Routes>
     </BrowserRouter>

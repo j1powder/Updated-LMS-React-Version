@@ -36,8 +36,10 @@ const AllCourses = (props) => {
     const finalVideo = "https://player.vimeo.com/video/455943382?h=2d45027c8e&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
     const finalScore = Math.round(totalCorrect/totalQuestions * 100)
 
+    console.log(totalQuestions)
+
     useEffect(()=>{
-        const ref = projectFirestore.collection(`newcourses/${props.courseTitle}/Sections`).orderBy("createdAt");
+        const ref = projectFirestore.collection(`newcourses/${props.courseTitle}/Sections`).orderBy("orderNumber");
         ref.onSnapshot((snapshot)=>{
        let results = [];
             snapshot.docs.forEach(doc => {

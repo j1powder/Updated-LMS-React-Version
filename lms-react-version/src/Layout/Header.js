@@ -131,8 +131,14 @@ console.log(email)
                    return <>
                    <Nav.Link href='/Courselist' className={classes.color}>Assign Courses</Nav.Link>
                    <Nav.Link href='/roster' className={classes.color}>My Employees</Nav.Link>
-                   <Nav.Link href='/Coursebuilder' className={classes.color}>Course Builder</Nav.Link>
                    </>
+                }
+                else if(thisUser.id === user.uid && thisUser.userPermissionLevel === 'superAdmin'){
+                    return <>
+                    <Nav.Link href='/Courselist' className={classes.color}>Assign Courses</Nav.Link>
+                    <Nav.Link href='/roster' className={classes.color}>My Employees</Nav.Link>
+                    <Nav.Link href='/Coursebuilder' className={classes.color}>Course Builder</Nav.Link>
+                    </>
                 }
             })}
             {user && <Nav.Link  href='/MyCourses' className={classes.color}>My Courses</Nav.Link>}

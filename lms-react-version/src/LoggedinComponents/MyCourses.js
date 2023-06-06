@@ -49,7 +49,7 @@ const testData = (e) => {
     return <Fragment>
         <Container className={classes.contMargin}>
             <Row className={classes.colMargin}>
-        <Col md={12} className={classes.colMargin}>
+        <Col sm={12} className={classes.colMargin}>
         <Panel header="My Courses">
         {documents && documents.map((currentuser)=>{
         return <>
@@ -92,9 +92,7 @@ const testData = (e) => {
     </Col>
     </Row>
     </Container>
-
-    <Container>
-
+<Container>
     <Row>
     <Col sm={12} className={classes.colMargin}>
         <Panel  header='My Scores'>
